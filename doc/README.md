@@ -2,7 +2,4 @@
 
 --- 
 
-> 例如:
-
-1.  mysql表结构
-2. 需求文档
+- `rule_mysql_table.md`: mysql表设计规范
