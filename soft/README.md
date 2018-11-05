@@ -3,7 +3,7 @@
 [下载地址](https://pan.baidu.com/s/1xpzXW_btVWEkDJQB5AK1tQ)
 [Mysql安装文档](https://dev.mysql.com/doc/refman/8.0/en/windows-install-archive.html)
 
-+ + mysql安装完项目启动失败问题，在mysql客户端执行sql如下：
++ + mysql安装完项目启动失败问题，在mysql客户端执行如下sql：
 ```
 show VARIABLES LIKE '%time_zone%'
 set GLOBAL time_zone='+8:00'
