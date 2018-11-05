@@ -60,6 +60,7 @@
 *.class
 target
 /target/
+*/target/
 
 # Log file
 *.log
