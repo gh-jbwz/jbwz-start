@@ -2,4 +2,4 @@
 
 --- 
 
-- `rule_mysql_table.md`: mysql表设计规范
+- [`rule_mysql_table`](./rule_mysql_table.md): mysql表设计规范
