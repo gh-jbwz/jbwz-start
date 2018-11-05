@@ -4,7 +4,6 @@
 [Mysql安装文档](https://dev.mysql.com/doc/refman/8.0/en/windows-install-archive.html)
 
 + + mysql安装完连接失败问题如下设置
-
 ```
 show VARIABLES LIKE '%time_zone%'
 set GLOBAL time_zone='+8:00'
