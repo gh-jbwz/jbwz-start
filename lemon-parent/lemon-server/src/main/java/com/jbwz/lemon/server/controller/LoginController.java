@@ -1,6 +1,11 @@
-package com.jbwz.lemon.server.security;
+package com.jbwz.lemon.server.controller;
 
+import com.jbwz.lemon.server.base.BaseController;
+import com.jbwz.lemon.server.base.ResponseCode;
+import com.jbwz.lemon.server.base.ResponseJson;
 import com.jbwz.lemon.server.security.common.SessionUser;
+import com.jbwz.lemon.server.security.service.BaseFormLoginService;
+import com.jbwz.lemon.server.security.service.SessionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
@@ -28,28 +33,7 @@ public class LoginController extends BaseController {
   SessionService sessionService;
 
 
-  /**
-   * login page name  must be loginView.html
-   */
-  @GetMapping("/login")
-  public String loginGet(HttpServletRequest request) {
-    if (isAppLogin(request)) {
-      return "forward:login-app";
-    }
-    return "loginView";
-  }
 
-  @GetMapping(value = "/login-app")
-  @ResponseBody
-  public ResponseJson loginGetApp() {
-    return responseFail(ResponseCode.ACCOUNT_NOT_LOGINED);
-  }
-
-  @ResponseBody
-  @RequestMapping("/sein")
-  public ResponseJson sessionInvalid() {
-    return responseFail(1111, "session invalid");
-  }
 
   @ResponseBody
   @RequestMapping("/login-success")

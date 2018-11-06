@@ -1,4 +1,4 @@
-package com.jbwz.lemon.server.security;
+package com.jbwz.lemon.server.config;
 
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.serializer.ValueFilter;

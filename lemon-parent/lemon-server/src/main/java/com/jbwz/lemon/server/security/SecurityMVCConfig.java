@@ -11,11 +11,9 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.annotation.web.configurers.FormLoginConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.ForwardAuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.CollectionUtils;
@@ -72,23 +70,19 @@ public class SecurityMVCConfig extends WebSecurityConfigurerAdapter {
                 .addFilterBefore(new LogAccessFilter(), LogoutFilter.class)
                 .authorizeRequests()
                 .accessDecisionManager(affirmativeBased)
-                //TODO what is the difference between  permitAll and anonymous
-                .antMatchers(collectionToArray(ANYONE_ACCESS_URL)).permitAll()
+                .antMatchers(collectionToArray(ANYONE_ACCESS_URL))
+                .permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
-                .apply(new FormLoginConfigurer<>())
-                .loginPage("/login")
+                .formLogin()
                 .permitAll()
+                .loginPage("/login")
                 .failureForwardUrl("/login-error")
                 .successForwardUrl("/login-success")
-                .successHandler(new ForwardAuthenticationSuccessHandler("/login-success"))
-                .permitAll()
                 .and()
                 .logout()
                 .logoutSuccessUrl("/logout-success")
-                .deleteCookies("SESSION")
-                .and()
         ;
     }
 
