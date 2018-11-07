@@ -1,4 +1,4 @@
-package com.jbwz.lemon.server.security.common;
+package com.jbwz.lemon.server.util;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.RandomStringUtils;

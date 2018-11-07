@@ -6,8 +6,8 @@ package com.jbwz.lemon.server.message.sms.entity;
  * @author yyh
  */
 public enum SMSTemplateCode {
-  CAPTCHA_CODE("SMS_125019786", 1, "验证码短信"), TODO_RESERVE_NOTIFY_CODE("SMS_128890371", 2,
-      "收房待办事项通知");
+  CAPTCHA_CODE("", 1, "验证码短信"), TODO_RESERVE_NOTIFY_CODE("", 2,
+      "");
 
   private String code;
   private String comment;

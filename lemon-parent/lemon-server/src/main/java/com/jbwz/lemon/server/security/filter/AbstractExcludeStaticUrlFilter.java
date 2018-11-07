@@ -1,7 +1,7 @@
 package com.jbwz.lemon.server.security.filter;
 
 
-import com.jbwz.lemon.server.security.SecurityMVCConfig;
+import com.jbwz.lemon.server.config.SecurityMVCConfig;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;

@@ -10,178 +10,165 @@ import java.util.Set;
 
 public class SessionUser implements UserDetails {
 
-  private static long serialVersionUID = 991293242442L;
+    private static long serialVersionUID = 991293242442L;
 
-  // ~ Instance fields
-  // ================================================================================================
-  private Long userId;
-  private String password;
-  private String username;
-  private String realName;
-  private Set<GrantedAuthority> authorities = new HashSet<>();
-  private boolean accountNonExpired;
-  private boolean accountNonLocked;
-  private boolean credentialsNonExpired;
-  private boolean enabled = true;
-  private boolean isSystemLogin = false;
+    // ~ Instance fields
+    // ================================================================================================
+    private Integer userId;
+    private String password;
+    private String username;
+    private String realName;
+    private Set<GrantedAuthority> authorities = new HashSet<>();
+    private boolean accountNonExpired;
+    private boolean accountNonLocked;
+    private boolean credentialsNonExpired;
+    private boolean enabled = true;
 
-  private String sessionId;
-  private int loginErrorTimes;
-  private Date lastLoginTime;
+    private String sessionId;
+    private int loginErrorTimes;
+    private Date lastLoginTime;
 
-  public SessionUser() {
-  }
-
-  public void setEnabled(boolean enabled) {
-    this.enabled = enabled;
-  }
-
-  public String getSessionId() {
-    return sessionId;
-  }
-
-  public void setSessionId(String sessionId) {
-    this.sessionId = sessionId;
-  }
-
-  public boolean isSystemLogin() {
-    return isSystemLogin;
-  }
-
-  public void setSystemLogin(boolean systemLogin) {
-    isSystemLogin = systemLogin;
-  }
-
-  public SessionUser(Long userId, Long communityId, String password,
-                     String username, String realName,
-                     Set<GrantedAuthority> authorities) {
-    this.userId = userId;
-    this.password = password;
-    this.username = username;
-    this.realName = realName;
-    if (authorities != null) {
-      this.authorities.addAll(authorities);
+    public SessionUser() {
     }
-  }
 
-  public SessionUser(Long userId, String password, String username, String realName,
-                     Set<GrantedAuthority> authorities) {
-    this.userId = userId;
-    this.password = password;
-    this.username = username;
-    this.realName = realName;
-    this.authorities.addAll(authorities);
-  }
-
-  public Long getUserId() {
-    return userId;
-  }
-
-  public void setUserId(Long userId) {
-    this.userId = userId;
-  }
-
-  public void setPassword(String password) {
-    this.password = password;
-  }
-
-  public void setUsername(String username) {
-    this.username = username;
-  }
-
-  public String getRealName() {
-    return realName;
-  }
-
-  public void setRealName(String realName) {
-    this.realName = realName;
-  }
-
-  public void setAuthorities(Set<GrantedAuthority> authorities) {
-    if (authorities != null) {
-      this.authorities.addAll(authorities);
+    public Integer getUserId() {
+        return userId;
     }
-  }
 
-  public void setAccountNonExpired(boolean accountNonExpired) {
-    this.accountNonExpired = accountNonExpired;
-  }
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
 
-  public void setAccountNonLocked(boolean accountNonLocked) {
-    this.accountNonLocked = accountNonLocked;
-  }
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-  public void setCredentialsNonExpired(boolean credentialsNonExpired) {
-    this.credentialsNonExpired = credentialsNonExpired;
-  }
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
-  @Override
-  public Collection<? extends GrantedAuthority> getAuthorities() {
-    return this.authorities;
-  }
+    public String getRealName() {
+        return realName;
+    }
 
-  @Override
-  public String getPassword() {
-    return this.password;
-  }
+    public void setRealName(String realName) {
+        this.realName = realName;
+    }
 
-  @Override
-  public String getUsername() {
-    return this.username;
-  }
+    public void setAuthorities(Set<GrantedAuthority> authorities) {
+        this.authorities = authorities;
+    }
 
-  @Override
-  public boolean isAccountNonExpired() {
-    return !this.accountNonExpired;
-  }
+    public void setAccountNonExpired(boolean accountNonExpired) {
+        this.accountNonExpired = accountNonExpired;
+    }
 
-  @Override
-  public boolean isAccountNonLocked() {
-    return !this.accountNonLocked;
-  }
+    public void setAccountNonLocked(boolean accountNonLocked) {
+        this.accountNonLocked = accountNonLocked;
+    }
 
-  @Override
-  public boolean isCredentialsNonExpired() {
-    return !this.credentialsNonExpired;
-  }
+    public void setCredentialsNonExpired(boolean credentialsNonExpired) {
+        this.credentialsNonExpired = credentialsNonExpired;
+    }
 
-  @Override
-  public boolean isEnabled() {
-    return this.enabled;
-  }
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
 
-  public String toString() {
-    StringBuilder stringBuilder = new StringBuilder();
-    stringBuilder.append("userId=");
-    stringBuilder.append(this.userId);
-    stringBuilder.append(",");
-    stringBuilder.append("username=");
-    stringBuilder.append(this.username);
-    stringBuilder.append(",");
-    stringBuilder.append("realName=");
-    stringBuilder.append(this.realName);
-    stringBuilder.append(",");
-    stringBuilder.append("systemLogin=");
-    stringBuilder.append(this.isSystemLogin);
-    stringBuilder.append(",");
-    stringBuilder.append("sessionId=");
-    stringBuilder.append(this.sessionId);
-    return stringBuilder.toString();
-  }
+    public String getSessionId() {
+        return sessionId;
+    }
 
-  public int getLoginErrorTimes() {
-    return loginErrorTimes;
-  }
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
+    }
 
-  public void setLoginErrorTimes(int loginErrorTimes) {
-    this.loginErrorTimes = loginErrorTimes;
-  }
+    public SessionUser(Integer userId, Long communityId, String password,
+                       String username, String realName,
+                       Set<GrantedAuthority> authorities) {
+        this.userId = userId;
+        this.password = password;
+        this.username = username;
+        this.realName = realName;
+        if (authorities != null) {
+            this.authorities.addAll(authorities);
+        }
+    }
 
-  public Date getLastLoginTime() {
-    return lastLoginTime;
-  }
+    public SessionUser(Integer userId, String password, String username, String realName,
+                       Set<GrantedAuthority> authorities) {
+        this.userId = userId;
+        this.password = password;
+        this.username = username;
+        this.realName = realName;
+        this.authorities.addAll(authorities);
+    }
 
-  public void setLastLoginTime(Date lastLoginTime) {
-    this.lastLoginTime = lastLoginTime;
-  }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return this.authorities;
+    }
+
+    @Override
+    public String getPassword() {
+        return this.password;
+    }
+
+    @Override
+    public String getUsername() {
+        return this.username;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return !this.accountNonExpired;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return !this.accountNonLocked;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return !this.credentialsNonExpired;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return this.enabled;
+    }
+
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("userId=");
+        stringBuilder.append(this.userId);
+        stringBuilder.append(",");
+        stringBuilder.append("username=");
+        stringBuilder.append(this.username);
+        stringBuilder.append(",");
+        stringBuilder.append("realName=");
+        stringBuilder.append(this.realName);
+        stringBuilder.append(",");
+        stringBuilder.append("sessionId=");
+        stringBuilder.append(this.sessionId);
+        return stringBuilder.toString();
+    }
+
+    public int getLoginErrorTimes() {
+        return loginErrorTimes;
+    }
+
+    public void setLoginErrorTimes(int loginErrorTimes) {
+        this.loginErrorTimes = loginErrorTimes;
+    }
+
+    public Date getLastLoginTime() {
+        return lastLoginTime;
+    }
+
+    public void setLastLoginTime(Date lastLoginTime) {
+        this.lastLoginTime = lastLoginTime;
+    }
 }

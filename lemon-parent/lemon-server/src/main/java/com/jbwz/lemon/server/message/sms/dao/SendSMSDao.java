@@ -9,7 +9,7 @@ import com.aliyuncs.http.FormatType;
 import com.aliyuncs.http.MethodType;
 import com.aliyuncs.profile.DefaultProfile;
 import com.aliyuncs.profile.IClientProfile;
-import com.sponge.common.message.sms.entity.SMSRequest;
+import com.jbwz.lemon.server.message.sms.entity.SMSRequest;
 import org.springframework.stereotype.Component;
 
 /**

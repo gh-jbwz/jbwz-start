@@ -1,6 +1,6 @@
 package com.jbwz.lemon.server.security.filter;
 
-import com.jbwz.lemon.server.security.common.RequestUtil;
+import com.jbwz.lemon.server.util.RequestUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.Order;

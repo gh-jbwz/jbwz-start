@@ -7,7 +7,7 @@ import java.util.Set;
 
 public interface SessionService {
 
-  void changeGrantedAuthoritys(HttpServletRequest request,
+  void changeGrantedAuthority(HttpServletRequest request,
                                Set<GrantedAuthority> authoritys);
 
 

@@ -1,4 +1,4 @@
-package com.jbwz.lemon.server.security;
+package com.jbwz.lemon.server.config;
 
 import com.jbwz.lemon.server.security.authorization.PathMatchVoter;
 import com.jbwz.lemon.server.security.filter.LogAccessFilter;
@@ -64,25 +64,21 @@ public class SecurityMVCConfig extends WebSecurityConfigurerAdapter {
         List<AccessDecisionVoter<? extends Object>> decisionVoters = new ArrayList<AccessDecisionVoter<? extends Object>>();
         decisionVoters.add(new PathMatchVoter());
         AffirmativeBased affirmativeBased = new AffirmativeBased(decisionVoters);
-
         http
                 .csrf().disable()
                 .addFilterBefore(new LogAccessFilter(), LogoutFilter.class)
                 .authorizeRequests()
                 .accessDecisionManager(affirmativeBased)
-                .antMatchers(collectionToArray(ANYONE_ACCESS_URL))
-                .permitAll()
-                .anyRequest()
-                .authenticated()
+                .antMatchers(collectionToArray(ANYONE_ACCESS_URL)).permitAll()//静态资源可以随便访问
+                .anyRequest().authenticated() //任何url都要登陆后才能访问
                 .and()
                 .formLogin()
-                .permitAll()
-                .loginPage("/login")
-                .failureForwardUrl("/login-error")
+                .loginPage("/login").permitAll()
                 .successForwardUrl("/login-success")
+                .failureForwardUrl("/login-error").permitAll()
                 .and()
-                .logout()
-                .logoutSuccessUrl("/logout-success")
+                .logout().permitAll()
+                .logoutSuccessUrl("/logout-success").permitAll()
         ;
     }
 

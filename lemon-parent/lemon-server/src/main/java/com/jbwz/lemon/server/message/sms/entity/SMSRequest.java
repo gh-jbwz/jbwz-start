@@ -15,7 +15,7 @@ public class SMSRequest {
   private String confirmDate;
   private String captcha;
   private String templateCode;
-  private String signName = "智叶科技";
+  private String signName = "";
 
   public SMSRequest() {
   }

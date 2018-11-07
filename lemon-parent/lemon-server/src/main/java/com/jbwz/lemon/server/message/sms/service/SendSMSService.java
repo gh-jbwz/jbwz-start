@@ -1,11 +1,7 @@
 package com.jbwz.lemon.server.message.sms.service;
 
 import com.aliyuncs.exceptions.ClientException;
-import com.sponge.common.constant.MessageBusinessType;
-import com.sponge.common.exception.CaptchaExpireException;
-import com.sponge.common.exception.CaptchaNotUsedException;
-import com.sponge.common.exception.CaptchaWrongException;
-import com.sponge.common.message.sms.entity.SMSTemplateCode;
+import com.jbwz.lemon.server.message.sms.entity.SMSTemplateCode;
 
 import java.util.List;
 
@@ -50,14 +46,5 @@ public interface SendSMSService {
   String send(SMSTemplateCode smsTemplateCode, String captcha, String phone) throws ClientException;
 
 
-  String getCaptcha(MessageBusinessType type, String phone);
 
-  /**
-   * 只发送验证码
-   */
-  String sendCaptchaMsg(String phone, MessageBusinessType type)
-      throws CaptchaNotUsedException, ClientException;
-
-  boolean matchCaptcha(String captcha, String phone, MessageBusinessType type)
-      throws CaptchaExpireException, CaptchaWrongException;
 }

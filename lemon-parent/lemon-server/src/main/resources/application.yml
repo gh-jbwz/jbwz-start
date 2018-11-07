@@ -5,6 +5,8 @@ server:
 
 
 spring:
+  messages:
+    use-code-as-default-message: false
   datasource:
     druid:
       url: jdbc:mysql://localhost:3306/jbwz?useUnicode=true&characterEncoding=UTF-8
