@@ -3,4 +3,4 @@
 ### 文件说明
 - [`config-mysql-user-privileges`](./config-mysql-user-privileges.md): mysql用户权限设置
 - [`rules-mysql-table`](./rules-mysql-table.md): mysql表设计规范
-- [`how-to-run-vue`](./how-to-run-vue`.md): 怎么运行第一个vue
+- [`how-to-run-vue`](./how-to-run-vue.md): 怎么运行第一个vue
