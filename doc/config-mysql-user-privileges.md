@@ -12,6 +12,10 @@ CREATE DATABASE `jbwz` CHARACTER SET 'utf8mb4' COLLATE 'utf8mb4_general_ci';
 #### 创建用户
 ```
 CREATE USER 'hello'@'%' IDENTIFIED BY 'hello';
+
+  #创建多个ip的用户可以访问
+  
+CREATE USER 'pro'@'172.%.%.%' IDENTIFIED BY 'pro';
 ```
 #### 给用户赋权限
 ```
