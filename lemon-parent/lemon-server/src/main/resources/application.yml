@@ -1,5 +1,5 @@
 server:
-  port: 8086
+  port: 8080
   servlet:
     context-path: /oa
 
@@ -40,3 +40,20 @@ spring:
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
 
+logging:
+  level: info
+  path: D:\\jbwz\\logs
+
+
+---
+spring:
+  profiles: pro
+  datasource:
+    druid:
+      url: jdbc:mysql://mysql-server:3306/jbwz?useUnicode=true&characterEncoding=UTF-8
+      username: pro
+      password: pro
+
+logging:
+  level: info
+  path: /jbwz/logs

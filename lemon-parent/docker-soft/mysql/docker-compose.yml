@@ -1,0 +1,22 @@
+version: '3'
+services:
+  mysql-server:
+    image: mysql:5.7
+    volumes:
+    - mysql-data:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+        MYSQL_DATABASE=jbwz
+        MYSQL_USER=jbwzmen
+        MYSQL_PASSWORD=hello
+        TZ=Asia/Shanghai
+    ports:
+     - "3306:3306"
+    networks:
+     - web-net
+
+networks:
+  web-net:
+    external: true
+volumes:
+  mysql-data:

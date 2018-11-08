@@ -25,7 +25,7 @@ public class BaseController {
 
     private ResponseJson result(int code, Object data) {
         //TODO 通过国际化获取错误信息
-        return new ResponseJson(code, messageSource.getMessage(String.valueOf(code), null, Locale.CHINESE), data);
+        return new ResponseJson(code, messageSource.getMessage(String.valueOf(code), null, Locale.CHINA), data);
     }
 
     protected ResponseJson fail(int code) {
