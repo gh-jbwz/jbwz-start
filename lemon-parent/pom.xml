@@ -6,7 +6,7 @@
     <groupId>com.jbwz</groupId>
     <artifactId>lemon-parent</artifactId>
     <version>0.0.1</version>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
 
     <name>lemon-parent</name>
 

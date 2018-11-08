@@ -73,7 +73,7 @@ public class SecurityMVCConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated() //任何url都要登陆后才能访问
                 .and()
                 .formLogin()
-                .loginPage("/login").permitAll()
+                .loginPage("/login")
                 .successForwardUrl("/login-success")
                 .failureForwardUrl("/login-error").permitAll()
                 .and()
