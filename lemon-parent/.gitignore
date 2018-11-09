@@ -1,7 +1,7 @@
 */target/
 /target/
 target
-generated
+generated/*
 *.tar.gz
 
 ### STS ###
