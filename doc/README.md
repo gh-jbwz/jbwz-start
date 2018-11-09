@@ -6,3 +6,4 @@
 - [`how-to-run-vue`](./how-to-run-vue.md): 怎么运行第一个vue
 - [`shell-string-learn`](./shell-string-learn.md): Shell String 用法
 - [`vue-directory-structure`](./vue-directory-structure.md): vue 目录结构说明
+- [`Plugs-in-Vue`](./Plugs-in-Vue.md):前端Vue中引入的插件
