@@ -8,7 +8,7 @@
 ### mavonEditor
 基于Vue的markdown编辑器。地址:[mavonEditor](https://github.com/hinesboy/mavonEditor)
 ### cropper.js
-用于裁剪图片。地址：[cropperjs](https://github.com/fengyuanchen/cropperjs) 插件演示地址：[Cropper.js](https://fengyuanchen.github.io/cropperjs/)
+用于裁剪图片。地址：[cropperjs](https://github.com/fengyuanchen/cropperjs)  插件演示地址：[Cropper.js](https://fengyuanchen.github.io/cropperjs/)
 ### Vue.Draggable
 Vue.Draggable：基于 Sortable.js 的 Vue 拖拽组件。 地址：[Vue.Draggable](https://github.com/SortableJS/Vue.Draggable)
 
