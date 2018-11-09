@@ -7,8 +7,8 @@
 基于Quill、适用于Vue2的富文本编辑器。地址：[vue-quill-editor](https://github.com/surmon-china/vue-quill-editor)
 ### mavonEditor
 基于Vue的markdown编辑器。地址:[mavonEditor](https://github.com/hinesboy/mavonEditor)
-### vue-cropper.js
-一个封装了 cropperjs 的 Vue 组件，用于裁剪图片。地址：[vue-cropperjs](https://github.com/Agontuk/vue-cropperjs)
+### cropper.js
+用于裁剪图片。地址：[cropperjs](https://github.com/fengyuanchen/cropperjs) 插件演示地址：[Cropper.js](https://fengyuanchen.github.io/cropperjs/)
 ### Vue.Draggable
 Vue.Draggable：基于 Sortable.js 的 Vue 拖拽组件。 地址：[Vue.Draggable](https://github.com/SortableJS/Vue.Draggable)
 
