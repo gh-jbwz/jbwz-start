@@ -12,7 +12,7 @@
 ### Vue.Draggable
 Vue.Draggable：基于 Sortable.js 的 Vue 拖拽组件。 地址：[Vue.Draggable](https://github.com/SortableJS/Vue.Draggable,"Vue.Draggable")
 
-## （二）如何替换组件
+## （二）如何删除组件
 
 ### 具体步骤
 1. 删除该组件的路由，在目录`src/router/index.js`中，找到引入该组件的路由，删除相关代码
