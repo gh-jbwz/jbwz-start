@@ -1,6 +1,8 @@
 */target/
 /target/
 target
+generated
+*.tar.gz
 
 ### STS ###
 .apt_generated

@@ -18,6 +18,7 @@
     </parent>
     <modules>
         <module>lemon-server</module>
+        <module>lemon-generator</module>
     </modules>
 
     <properties>
