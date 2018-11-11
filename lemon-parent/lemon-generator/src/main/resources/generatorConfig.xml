@@ -108,8 +108,9 @@
     <table tableName="jbwz_menu" domainObjectName="Menu">
       <generatedKey column="menu_id" sqlStatement="JDBC"/>
     </table>
-    <table tableName="jbwz_resource" domainObjectName="resource">
+    <table tableName="jbwz_resource" domainObjectName="Resource">
       <generatedKey column="resource_id" sqlStatement="JDBC"/>
     </table>
+
   </context>
 </generatorConfiguration>
