@@ -1,9 +1,9 @@
 package ${package};
 
 import ${tableClass.fullClassName};
-import com.lemon.mybatis.service.${baseService};
+import com.jbwz.lemon.server.base.BaseService;
 
-public interface ${tableClass.shortClassName}${mapperSuffix} extends ${baseService!"tk.mybatis.mapper.common.Mapper"}<${tableClass.shortClassName}> {
+public interface ${tableClass.shortClassName}${classNameSuffix} extends BaseService<${tableClass.shortClassName}> {
 
 }
 

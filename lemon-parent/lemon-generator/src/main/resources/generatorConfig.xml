@@ -42,33 +42,30 @@
       <property name="targetPackage" value="com.jbwz.lemon.server.dao"/>
       <property name="baseMapper" value="BaseDao"/>
       <property name="templatePath" value="generator/mapper.ftl"/>
-      <property name="mapperSuffix" value="Dao"/>
+      <property name="classNameSuffix" value="Dao"/>
       <property name="fileName"
-        value="${tableClass.shortClassName}${mapperSuffix}.java"/>
+        value="${tableClass.shortClassName}${classNameSuffix}.java"/>
     </plugin>
 
     <!--service接口 -->
     <plugin type="com.lemon.generator.TemplateFilePlugin">
       <property name="targetProject" value="generated"/>
       <property name="targetPackage" value="com.jbwz.lemon.server.service"/>
-      <property name="baseService" value="BaseService"/>
       <property name="templatePath" value="generator/service.ftl"/>
-      <property name="mapperSuffix" value="Service"/>
+      <property name="classNameSuffix" value="Service"/>
       <property name="fileName"
-        value="${tableClass.shortClassName}${mapperSuffix}.java"/>
+        value="${tableClass.shortClassName}${classNameSuffix}.java"/>
     </plugin>
 
     <!--service接口实现 -->
     <plugin type="com.lemon.generator.TemplateFilePlugin">
       <property name="targetProject" value="generated"/>
       <property name="targetPackage" value="com.jbwz.lemon.server.service.impl"/>
-      <property name="baseServiceImpl" value="BaseService"/>
-      <property name="baseService" value="Service"/>
       <property name="templatePath" value="generator/serviceImpl.ftl"/>
-      <property name="mapperSuffix" value="ServiceImp"/>
+      <property name="classNameSuffix" value="ServiceImpl"/>
       <property name="daoSuffix" value="Dao"/>
       <property name="fileName"
-        value="${tableClass.shortClassName}${mapperSuffix}.java"/>
+        value="${tableClass.shortClassName}${classNameSuffix}.java"/>
     </plugin>
 
     <!--controller接口实现 -->
@@ -76,10 +73,10 @@
       <property name="targetProject" value="generated"/>
       <property name="targetPackage" value="com.jbwz.lemon.server.controller"/>
       <property name="templatePath" value="generator/controller.ftl"/>
-      <property name="controllerSuffix" value="Controller"/>
+      <property name="classNameSuffix" value="Controller"/>
       <property name="serviceSuffix" value="Service"/>
       <property name="fileName"
-        value="${tableClass.shortClassName}${controllerSuffix}.java"/>
+        value="${tableClass.shortClassName}${classNameSuffix}.java"/>
     </plugin>
 
 <!--    &lt;!&ndash;mapper.xml &ndash;&gt;

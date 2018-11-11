@@ -1,20 +1,17 @@
 package ${package};
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.lemon.mybatis.dao.BaseDao;
-import com.lemon.account.dao.${tableClass.shortClassName}${daoSuffix};
-import com.lemon.mybatis.service.${baseServiceImpl};
-import com.lemon.account.service.${tableClass.shortClassName}${baseService};
+import com.jbwz.lemon.server.base.BaseDao;
+import com.jbwz.lemon.server.dao.${tableClass.shortClassName}${daoSuffix};
+import com.jbwz.lemon.server.base.AbstractBaseService;
+import com.jbwz.lemon.server.service.${tableClass.shortClassName}Service
 import ${tableClass.fullClassName};
 
 @Service
-public class ${tableClass.shortClassName}${mapperSuffix} extends ${baseServiceImpl!"tk.mybatis.mapper.common.Mapper"}<${tableClass.shortClassName}> implements ${tableClass.shortClassName!"tk.mybatis.mapper.common.Mapper"}${baseService} {
+public class ${tableClass.shortClassName}${classNameSuffix} extends AbstractBaseService<${tableClass.shortClassName}> implements ${tableClass.shortClassName}Service {
 
-  private static final Logger LOGGER = LogManager.getLogger(${tableClass.shortClassName}${mapperSuffix}.class);
-  
+
   @Autowired
   ${tableClass.shortClassName}${daoSuffix} ${tableClass.lowClassName}${daoSuffix};
 
