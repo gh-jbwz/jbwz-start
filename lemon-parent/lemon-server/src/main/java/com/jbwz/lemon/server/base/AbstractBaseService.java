@@ -19,7 +19,6 @@ public abstract class AbstractBaseService<T> implements BaseService<T> {
     }
 
     public void deleteById(T t) {
-        getDao().delete(t);
     }
 
     public T findById(Integer id) {
