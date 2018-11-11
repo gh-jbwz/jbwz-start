@@ -102,8 +102,14 @@
     </javaModelGenerator>
 
 
-    <table tableName="jbwz_user" domainObjectName="User">
-      <generatedKey column="user_id" sqlStatement="JDBC"/>
+    <table tableName="jbwz_dict" domainObjectName="Dict">
+      <generatedKey column="dict_id" sqlStatement="JDBC"/>
+    </table>
+    <table tableName="jbwz_menu" domainObjectName="Menu">
+      <generatedKey column="menu_id" sqlStatement="JDBC"/>
+    </table>
+    <table tableName="jbwz_resource" domainObjectName="resource">
+      <generatedKey column="resource_id" sqlStatement="JDBC"/>
     </table>
   </context>
 </generatorConfiguration>

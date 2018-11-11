@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import com.jbwz.lemon.server.base.BaseDao;
 import com.jbwz.lemon.server.dao.${tableClass.shortClassName}${daoSuffix};
 import com.jbwz.lemon.server.base.AbstractBaseService;
-import com.jbwz.lemon.server.service.${tableClass.shortClassName}Service
+import com.jbwz.lemon.server.service.${tableClass.shortClassName}Service;
 import ${tableClass.fullClassName};
 
 @Service

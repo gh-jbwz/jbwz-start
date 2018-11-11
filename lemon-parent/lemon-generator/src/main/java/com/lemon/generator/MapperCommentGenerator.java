@@ -27,12 +27,17 @@ package com.lemon.generator;
 import org.mybatis.generator.api.CommentGenerator;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
+import org.mybatis.generator.api.MyBatisGenerator;
 import org.mybatis.generator.api.dom.java.*;
 import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 import org.mybatis.generator.config.MergeConstants;
 import org.mybatis.generator.internal.util.StringUtility;
+
+import javax.xml.bind.DatatypeConverter;
 import java.text.MessageFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Properties;
 import java.util.Set;
 
@@ -40,7 +45,11 @@ public class MapperCommentGenerator implements CommentGenerator {
     //开始的分隔符，例如mysql为`，sqlserver为[
     private String beginningDelimiter = "";
     //结束的分隔符，例如mysql为`，sqlserver为]
-    private String endingDelimiter    = "";
+    private String endingDelimiter = "";
+    private boolean suppressDate = false;
+    private boolean suppressAllComments = false;
+    private boolean addRemarkComments = false;
+    private SimpleDateFormat dateFormat;
     //强制生成注解
     private boolean forceAnnotation;
 
@@ -170,8 +179,9 @@ public class MapperCommentGenerator implements CommentGenerator {
 //            field.addAnnotation("@Column(name = \"" + getDelimiterName(column) + "\")");
 //        }
         if (introspectedColumn.isIdentity()) {
-          // @KeySql(useGeneratedKeys = true)
-          field.addAnnotation("@KeySql(useGeneratedKeys = true)");
+            // @KeySql(useGeneratedKeys = true)
+//          field.addAnnotation("@KeySql(useGeneratedKeys = true)");
+            field.addAnnotation("@GeneratedValue(strategy = GenerationType.IDENTITY)");
 //            if (introspectedTable.getTableConfiguration().getGeneratedKey().getRuntimeSqlStatement().equals("JDBC")) {
 //                field.addAnnotation("@GeneratedValue(generator = \"JDBC\")");
 //            } else {
@@ -312,7 +322,36 @@ public class MapperCommentGenerator implements CommentGenerator {
      * @since mbg 1.3.6
      */
     @Override
-    public void addClassAnnotation(InnerClass innerClass, IntrospectedTable introspectedTable, Set<FullyQualifiedJavaType> set) {
+    public void addClassAnnotation(InnerClass innerClass, IntrospectedTable introspectedTable, Set<FullyQualifiedJavaType> imports) {
+        imports.add(new FullyQualifiedJavaType("javax.annotation.Generated"));
+        String comment = "Source Table: " + introspectedTable.getFullyQualifiedTable().toString();
+        innerClass.addAnnotation(this.getGeneratedAnnotation(comment));
+    }
 
+    private String getGeneratedAnnotation(String comment) {
+        StringBuilder buffer = new StringBuilder();
+        buffer.append("@Generated(");
+        if (this.suppressAllComments) {
+            buffer.append('"');
+        } else {
+            buffer.append("value=\"");
+        }
+
+        buffer.append(MyBatisGenerator.class.getName());
+        buffer.append('"');
+        if (!this.suppressDate && !this.suppressAllComments) {
+            buffer.append(", date=\"");
+            buffer.append(DatatypeConverter.printDateTime(Calendar.getInstance()));
+            buffer.append('"');
+        }
+
+        if (!this.suppressAllComments) {
+            buffer.append(", comments=\"");
+            buffer.append(comment);
+            buffer.append('"');
+        }
+
+        buffer.append(')');
+        return buffer.toString();
     }
 }

@@ -70,7 +70,8 @@ public class SecurityMVCConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .accessDecisionManager(affirmativeBased)
                 .antMatchers(collectionToArray(ANYONE_ACCESS_URL)).permitAll()//静态资源可以随便访问
-                .anyRequest().authenticated() //任何url都要登陆后才能访问
+//                .anyRequest().authenticated() //任何url都要登陆后才能访问
+                .anyRequest().permitAll()
                 .and()
                 .formLogin()
                 .loginPage("/login")

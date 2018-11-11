@@ -42,19 +42,19 @@ import java.util.Set;
  * @author liuzh
  */
 public class MapperPlugin extends FalseMethodPlugin {
-    private Set<String> mappers                   = new HashSet<String>();
-    private boolean     caseSensitive             = false;
-    private boolean     useMapperCommentGenerator = true;
+    private Set<String> mappers = new HashSet<String>();
+    private boolean caseSensitive = false;
+    private boolean useMapperCommentGenerator = true;
     //开始的分隔符，例如mysql为`，sqlserver为[
-    private String      beginningDelimiter        = "";
+    private String beginningDelimiter = "";
     //结束的分隔符，例如mysql为`，sqlserver为]
-    private String      endingDelimiter           = "";
+    private String endingDelimiter = "";
     //数据库模式
-    private String                        schema;
+    private String schema;
     //注释生成器
     private CommentGeneratorConfiguration commentCfg;
     //强制生成注解
-    private boolean                       forceAnnotation;
+    private boolean forceAnnotation;
 
     public String getDelimiterName(String name) {
         StringBuilder nameBuilder = new StringBuilder();
@@ -99,7 +99,8 @@ public class MapperPlugin extends FalseMethodPlugin {
     private void processEntityClass(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
         //引入JPA注解
         topLevelClass.addImportedType("javax.persistence.*");
-        topLevelClass.addImportedType("tk.mybatis.mapper.annotation.KeySql");
+        // 引入mybatis id注解
+//        topLevelClass.addImportedType("tk.mybatis.mapper.annotation.KeySql");
         String tableName = introspectedTable.getFullyQualifiedTableNameAtRuntime();
         //如果包含空格，或者需要分隔符，需要完善
         if (StringUtility.stringContainsSpace(tableName)) {
@@ -107,6 +108,7 @@ public class MapperPlugin extends FalseMethodPlugin {
                     + tableName
                     + context.getEndingDelimiter();
         }
+        topLevelClass.addAnnotation("@Entity");
         //是否忽略大小写，对于区分大小写的数据库，会有用
         if (caseSensitive && !topLevelClass.getType().getShortName().equals(tableName)) {
             topLevelClass.addAnnotation("@Table(name = \"" + getDelimiterName(tableName) + "\")");

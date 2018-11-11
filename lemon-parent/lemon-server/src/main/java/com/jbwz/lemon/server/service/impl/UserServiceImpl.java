@@ -1,7 +1,7 @@
 package com.jbwz.lemon.server.service.impl;
 
+import com.jbwz.lemon.server.base.BaseDao;
 import com.jbwz.lemon.server.dao.UserDao;
-import com.jbwz.lemon.server.entity.User;
 import com.jbwz.lemon.server.security.service.AbstractFormLoginService;
 import com.jbwz.lemon.server.service.UserService;
 import com.jbwz.lemon.server.util.DateUtil;
@@ -16,6 +16,11 @@ import java.util.Date;
 public class UserServiceImpl extends AbstractFormLoginService implements UserService {
     @Autowired
     UserDao userDao;
+
+    @Override
+    protected BaseDao getDao() {
+        return userDao;
+    }
 
     @Override
     protected UserDetails login(String username) {
@@ -42,8 +47,5 @@ public class UserServiceImpl extends AbstractFormLoginService implements UserSer
 
     }
 
-    @Override
-    public void save(User user) {
 
-    }
 }
