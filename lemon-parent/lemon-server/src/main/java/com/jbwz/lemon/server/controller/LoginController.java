@@ -33,7 +33,6 @@ public class LoginController extends BaseController {
     @Autowired
     SessionService sessionService;
 
-
     @ResponseBody
     @RequestMapping("/login-success")
     public ResponseJson loginSuccess(LoginDataVO loginDataVO, HttpServletRequest request) {

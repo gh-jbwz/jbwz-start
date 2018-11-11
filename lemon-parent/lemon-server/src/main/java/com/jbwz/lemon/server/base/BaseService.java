@@ -1,4 +1,5 @@
 package com.jbwz.lemon.server.base;
 
-public class BaseService {
+public interface BaseService<T> {
+    void save(T t);
 }

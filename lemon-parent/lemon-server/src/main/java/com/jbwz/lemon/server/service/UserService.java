@@ -1,5 +1,12 @@
 package com.jbwz.lemon.server.service;
 
-public interface UserService {
+import com.jbwz.lemon.server.base.BaseService;
+import com.jbwz.lemon.server.entity.User;
+
+public interface UserService extends BaseService<User> {
 
 }
+
+
+
+
