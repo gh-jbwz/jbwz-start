@@ -7,6 +7,11 @@ server:
 spring:
   messages:
     use-code-as-default-message: false
+  jpa:
+    show-sql: true
+    hibernate:
+      naming:
+        physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
   datasource:
     druid:
       url: jdbc:mysql://localhost:3306/jbwz?useUnicode=true&characterEncoding=UTF-8
@@ -33,12 +38,6 @@ spring:
       connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
 
     #=========== jpa 配置
-  jpa:
-    show-sql: true
-    hibernate:
-      ddl-auto: none
-      naming:
-        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
 
 logging:
   path: D:\\jbwz\\logs

@@ -1,7 +1,9 @@
 package com.jbwz.lemon.server.security.service;
 
+import com.jbwz.lemon.server.base.AbstractBaseService;
 import com.jbwz.lemon.server.base.ResponseCode;
 import com.jbwz.lemon.server.constant.UserConstant;
+import com.jbwz.lemon.server.entity.User;
 import com.jbwz.lemon.server.security.common.SessionUser;
 import com.jbwz.lemon.server.security.common.SessionUtils;
 import com.jbwz.lemon.server.util.DateUtil;
@@ -20,7 +22,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-public abstract class AbstractFormLoginService implements UserDetailsService {
+public abstract class AbstractFormLoginService extends AbstractBaseService<User> implements UserDetailsService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractFormLoginService.class);
     private static final int DEFAULT_MAX_LOGIN_ERROR_TIMES = 5;

@@ -1,8 +1,8 @@
 package com.jbwz.lemon.server.base;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.repository.NoRepositoryBean;
 
-@Repository
-public interface BaseDao<T> extends JpaRepository<T,Integer> {
+@NoRepositoryBean
+public interface BaseDao<T> extends JpaRepository<T, Integer> {
 }

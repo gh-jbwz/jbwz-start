@@ -3,11 +3,12 @@ package com.jbwz.lemon.server.entity;
 import java.util.Date;
 import javax.persistence.*;
 
-@Table(name = "jbwz_user")
 @Entity
+@Table(name = "jbwz_user")
 public class User {
     // 用户表
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer userId;
 
     // 员工号

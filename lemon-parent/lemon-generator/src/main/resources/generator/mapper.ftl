@@ -1,11 +1,11 @@
 package ${package};
 
-import com.lemon.mybatis.dao.${baseMapper};
-import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
+import com.jbwz.lemon.server.base.${baseMapper};
 import ${tableClass.fullClassName};
 
-@Mapper
-public interface ${tableClass.shortClassName}${mapperSuffix} extends ${baseMapper!"tk.mybatis.mapper.common.Mapper"}<${tableClass.shortClassName}> {
+@Repository
+public interface ${tableClass.shortClassName}${classNameSuffix} extends ${baseMapper}<${tableClass.shortClassName}> {
 
 }
 
