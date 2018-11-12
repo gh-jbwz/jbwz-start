@@ -8,6 +8,7 @@
   .DS_Store
 node_modules/
 .idea
+dist
 *.iml
 dist/
 npm-debug.log
