@@ -1,0 +1,12 @@
+{
+  "name": "jbwz 接口文档",
+  "version": "0.0.1",
+  "description": "后台提供的REST接口",
+  "title": "jbwz 接口文档",
+  "url": "http://localhost:8080/oa/",
+  "sampleUrl": "http://localhost:8080/oa/",
+  "template": {
+    "withCompare": true,
+    "withGenerator": true
+  }
+}
