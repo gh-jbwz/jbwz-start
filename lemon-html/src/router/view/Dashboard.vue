@@ -1,6 +1,22 @@
 <template>
     <div>
         <el-row :gutter="20">
+            <el-col :span="24">
+                <el-card shadow="hover" class="mgb20" style="height:252px;">
+                    <div style="align-content: center;margin-left:30%">
+                        <h3>这几把vue用着是真得劲,还是前端好玩.....</h3>
+                        <h3>这几把vue用着是真得劲,还是前端好玩.....</h3>
+                        <h3>这几把vue用着是真得劲,还是前端好玩.....</h3>
+                        <h3>这几把vue用着是真得劲,还是前端好玩.....</h3>
+                        <h3>这几把vue用着是真得劲,还是前端好玩.....</h3>
+                        <h3>这几把vue用着是真得劲,还是前端好玩.....</h3>
+                        <h3>这几把vue用着是真得劲,还是前端好玩.....</h3>
+                        <h3>这几把vue用着是真得劲,还是前端好玩.....</h3>
+                    </div>
+                </el-card>
+            </el-col>
+        </el-row>
+        <el-row :gutter="20">
             <el-col :span="8">
                 <el-card shadow="hover" class="mgb20" style="height:252px;">
                     <div class="user-info">
@@ -106,7 +122,7 @@
 
 <script>
     import Schart from 'vue-schart';
-    import bus from '../common/bus';
+    import bus from '../../components/common/bus';
     export default {
         name: 'dashboard',
         data() {
