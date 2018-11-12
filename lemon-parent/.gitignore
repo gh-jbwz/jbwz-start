@@ -2,7 +2,7 @@
 /target/
 target
 *.tar.gz
-
+lemon-server.*.jar
 ### STS ###
 .apt_generated
 .classpath
