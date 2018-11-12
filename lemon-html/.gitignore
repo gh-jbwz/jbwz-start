@@ -4,7 +4,13 @@
  npm-debug.log*
  yarn-debug.log*
  yarn-error.log*
-  
+  .DS_Store
+node_modules/
+.idea
+*.iml
+dist/
+npm-debug.log
+example.html
 #  # Runtime data
   pids
   *.pid
