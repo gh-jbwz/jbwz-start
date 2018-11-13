@@ -9,14 +9,16 @@ set -e
 mvn clean package -DskipTests
 if [ -e ${appFullName} ]
 then
-echo "ÎÄ¼ş¼ĞÒÑ´æÔÚ,É¾³ıÖØĞÂ´ò°ü."
+echo "æ–‡ä»¶å¤¹å·²å­˜åœ¨,åˆ é™¤é‡æ–°æ‰“åŒ…."
 rm -rf ${appFullName}
 fi
-echo "¿ªÊ¼´ò°üÏîÄ¿"
+echo "å¼€å§‹æ‰“åŒ…é¡¹ç›®"
 mkdir ${baseDir}/${appFullName}
 cp ${baseDir}/target/${appFullName}.jar ${baseDir}/release/docker/jar/
 cp -r ${baseDir}/release/* ${baseDir}/${appFullName}/
 
 tar czvf ${appFullName}.tar.gz ${appFullName}
-echo "´ò°üÍê³É:${baseDir}/${appFullName}.tar.gz"
+echo "æ‰“åŒ…å®Œæˆ:${baseDir}/${appFullName}.tar.gz"
 rm -rf ${appFullName}
+
+
