@@ -55,6 +55,6 @@ spring:
       password: pro
 
 jbwz:
-  viewPath: /jbwz/app/lemon-server-0.0.1/view/
+  viewPath: /jbwz/view/
 logging:
   path: /jbwz/logs
