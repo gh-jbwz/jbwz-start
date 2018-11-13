@@ -5,6 +5,9 @@ server:
 
 
 spring:
+#  resources:
+#    static-locations: file:/jbwz/view/
+    #=========== jpa 配置
   messages:
     use-code-as-default-message: false
   jpa:
@@ -37,11 +40,10 @@ spring:
       # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
       connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
 
-    #=========== jpa 配置
-
 logging:
   path: D:\\jbwz\\logs
-
+jbwz:
+  viewPath: D:/jbwz/static/view/
 
 ---
 spring:
@@ -52,5 +54,7 @@ spring:
       username: pro
       password: pro
 
+jbwz:
+  viewPath: /jbwz/static/view/
 logging:
   path: /jbwz/logs
