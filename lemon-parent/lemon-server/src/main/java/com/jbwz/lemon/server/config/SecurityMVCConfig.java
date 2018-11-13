@@ -12,7 +12,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.util.AntPathMatcher;
@@ -40,12 +39,15 @@ public class SecurityMVCConfig extends WebSecurityConfigurerAdapter {
         STATIC_RESOURCES_URL.add("/js/**");
         STATIC_RESOURCES_URL.add("/webjars/**");
         STATIC_RESOURCES_URL.add("/html/**");
+        STATIC_RESOURCES_URL.add("/static/**");
         STATIC_RESOURCES_URL.add("/plugins/**");
         ANYONE_ACCESS_URL.addAll(STATIC_RESOURCES_URL);
         ANYONE_ACCESS_URL.add("/login-error");
         ANYONE_ACCESS_URL.add("/logout-success");
         ANYONE_ACCESS_URL.add("/login");
         ANYONE_ACCESS_URL.add("/error");
+        ANYONE_ACCESS_URL.add("/");
+        ANYONE_ACCESS_URL.add("/index");
         ANYONE_ACCESS_URL.add("/user/findMobileNo");
         ANYONE_ACCESS_URL.add("/user/regSave");
     }
@@ -66,12 +68,13 @@ public class SecurityMVCConfig extends WebSecurityConfigurerAdapter {
         AffirmativeBased affirmativeBased = new AffirmativeBased(decisionVoters);
         http
                 .csrf().disable()
+                .cors().disable()
                 .addFilterBefore(new LogAccessFilter(), LogoutFilter.class)
                 .authorizeRequests()
                 .accessDecisionManager(affirmativeBased)
                 .antMatchers(collectionToArray(ANYONE_ACCESS_URL)).permitAll()//静态资源可以随便访问
-//                .anyRequest().authenticated() //任何url都要登陆后才能访问
-                .anyRequest().permitAll()
+                .anyRequest().authenticated() //任何url都要登陆后才能访问
+//                .anyRequest().permitAll()
                 .and()
                 .formLogin()
                 .loginPage("/login")
@@ -91,7 +94,18 @@ public class SecurityMVCConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+//        return new BCryptPasswordEncoder();
+        return new PasswordEncoder() {
+            @Override
+            public String encode(CharSequence rawPassword) {
+                return rawPassword.toString();
+            }
+
+            @Override
+            public boolean matches(CharSequence rawPassword, String encodedPassword) {
+                return rawPassword.toString().equals(encodedPassword);
+            }
+        };
     }
 
 

@@ -5,7 +5,7 @@ export default [
     },
     {
         path: '/',
-        component: resolve => require(['../components/common/Home.vue'], resolve),
+        component: resolve => require(['./layout/Body.vue'], resolve),
         meta: {title: '说明页'},
         children: [
             {

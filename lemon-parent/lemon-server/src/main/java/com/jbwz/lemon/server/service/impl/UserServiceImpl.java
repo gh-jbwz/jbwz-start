@@ -2,15 +2,20 @@ package com.jbwz.lemon.server.service.impl;
 
 import com.jbwz.lemon.server.base.BaseDao;
 import com.jbwz.lemon.server.dao.UserDao;
+import com.jbwz.lemon.server.entity.User;
 import com.jbwz.lemon.server.security.service.AbstractFormLoginService;
 import com.jbwz.lemon.server.service.UserService;
-import com.jbwz.lemon.server.util.DateUtil;
 import com.jbwz.lemon.server.vo.LoginDataVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Service
 public class UserServiceImpl extends AbstractFormLoginService implements UserService {
@@ -23,8 +28,14 @@ public class UserServiceImpl extends AbstractFormLoginService implements UserSer
     }
 
     @Override
-    protected UserDetails login(String username) {
-        return createSessionUser(1, username, "", "", "", DateUtil.nowDateTime(), 1);
+    protected UserDetails login(String username) throws UsernameNotFoundException {
+        User user = userDao.findByUserName(username);
+        if (user == null) {
+            throw new UsernameNotFoundException("no user");
+        }
+        Set<GrantedAuthority> aset = new HashSet<GrantedAuthority>();
+        aset.add(new SimpleGrantedAuthority("/**"));
+        return createSessionUser(user.getUserId(), user.getUserName(), user.getPassword(), user.getNickName(), aset, user.getStatus(), user.getUpdateTime(), 0);
     }
 
     @Override

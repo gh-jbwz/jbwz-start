@@ -5,8 +5,13 @@ server:
 
 
 spring:
-#  resources:
-#    static-locations: file:/jbwz/view/
+  resources:
+    cache:
+      cachecontrol:
+        no-cache: true
+    chain:
+      cache: false
+    #    static-locations: file:/jbwz/view/
     #=========== jpa 配置
   messages:
     use-code-as-default-message: false

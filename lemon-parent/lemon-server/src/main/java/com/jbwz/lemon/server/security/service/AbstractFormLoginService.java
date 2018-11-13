@@ -37,7 +37,7 @@ public abstract class AbstractFormLoginService extends AbstractBaseService<User>
         return login(username);
     }
 
-    protected abstract UserDetails login(String username);
+    protected abstract UserDetails login(String username) throws UsernameNotFoundException;
 
     protected SessionUser createSessionUser(Integer userId, String username, String password,
                                             String realName, String status, Date lastLoginTime, int errorTimes) {

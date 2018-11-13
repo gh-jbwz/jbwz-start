@@ -9,7 +9,8 @@
                     </el-input>
                 </el-form-item>
                 <el-form-item prop="password">
-                    <el-input type="password" placeholder="password" v-model="ruleForm.password" @keyup.enter.native="submitForm('ruleForm')">
+                    <el-input type="password" placeholder="password" v-model="ruleForm.password"
+                              @keyup.enter.native="submitForm('ruleForm')">
                         <el-button slot="prepend" icon="el-icon-lx-lock"></el-button>
                     </el-input>
                 </el-form-item>
@@ -23,31 +24,55 @@
 </template>
 
 <script>
+    import {Message} from "element-ui";
+
     export default {
-        data: function(){
+        data: function () {
             return {
                 ruleForm: {
-                    username: '几把袜子',
-                    password: 'lazy'
+                    username: 'yyh',
+                    password: 'yyh'
                 },
                 rules: {
                     username: [
-                        { required: true, message: '请输入用户名', trigger: 'blur' }
+                        {required: true, message: '请输入用户名', trigger: 'blur'}
                     ],
                     password: [
-                        { required: true, message: '请输入密码', trigger: 'blur' }
+                        {required: true, message: '请输入密码', trigger: 'blur'}
                     ]
                 }
             }
         },
         methods: {
             submitForm(formName) {
+                localStorage.clear();
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                        localStorage.setItem('ms_username',this.ruleForm.username);
+                        this.$axios.post("login", {
+                            "username": this.ruleForm.username,
+                            "password": this.ruleForm.password
+                        }).then((res) => {
+                            console.info("登陆界面返回信息", res)
+                            if (res.data.code == 2001) {
+                                Message({
+                                    // element ui 的消息弹窗组件,类似toast
+                                    showClose: true,
+                                    message: data.msg,
+                                    type: "info"
+                                });
+                            } else {
+                                localStorage.setItem("token", this.ruleForm.username);
+                            }
+                            console.info("登陆成功后返回信息>>>", data);
+                        })
                         this.$router.push('/');
                     } else {
-                        console.log('error submit!!');
+                        Message({
+                            // element ui 的消息弹窗组件,类似toast
+                            showClose: true,
+                            message: "请求登陆错误",
+                            type: "error"
+                        });
                         return false;
                     }
                 });
@@ -57,45 +82,51 @@
 </script>
 
 <style scoped>
-    .login-wrap{
+    .login-wrap {
         position: relative;
-        width:100%;
-        height:100%;
+        width: 100%;
+        height: 100%;
         background-image: url(../../assets/login-bg.jpg);
         background-size: 100%;
     }
-    .ms-title{
-        width:100%;
+
+    .ms-title {
+        width: 100%;
         line-height: 50px;
         text-align: center;
-        font-size:20px;
+        font-size: 20px;
         color: #fff;
         border-bottom: 1px solid #ddd;
     }
-    .ms-login{
+
+    .ms-login {
         position: absolute;
-        left:50%;
-        top:50%;
-        width:350px;
-        margin:-190px 0 0 -175px;
+        left: 50%;
+        top: 50%;
+        width: 350px;
+        margin: -190px 0 0 -175px;
         border-radius: 5px;
-        background: rgba(255,255,255, 0.3);
+        background: rgba(255, 255, 255, 0.3);
         overflow: hidden;
     }
-    .ms-content{
+
+    .ms-content {
         padding: 30px 30px;
     }
-    .login-btn{
+
+    .login-btn {
         text-align: center;
     }
-    .login-btn button{
-        width:100%;
-        height:36px;
+
+    .login-btn button {
+        width: 100%;
+        height: 36px;
         margin-bottom: 10px;
     }
-    .login-tips{
-        font-size:12px;
-        line-height:30px;
-        color:#fff;
+
+    .login-tips {
+        font-size: 12px;
+        line-height: 30px;
+        color: #fff;
     }
 </style>

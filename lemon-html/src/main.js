@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import App from './App';
 import router from './router';
-import axios from 'axios';
+import axios from './util/Axios';
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css'; // 默认主题
 // import '../static/css/theme-green/index.css';       // 浅绿色主题

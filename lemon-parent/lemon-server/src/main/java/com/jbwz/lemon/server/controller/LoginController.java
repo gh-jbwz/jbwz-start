@@ -9,10 +9,6 @@ import com.jbwz.lemon.server.security.service.AbstractFormLoginService;
 import com.jbwz.lemon.server.security.service.SessionService;
 import com.jbwz.lemon.server.vo.LoginDataVO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.DisabledException;
-import org.springframework.security.authentication.LockedException;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -57,18 +53,19 @@ public class LoginController extends BaseController {
     @RequestMapping("/login-error")
     public ResponseJson loginError(LoginDataVO loginDataVO, HttpServletRequest request) {
         Exception exception = (Exception) request.getAttribute(AUTHENTICATION_EXCEPTION);
-        int code = ResponseCode.ACCOUNT_DELETED;
+        int code = ResponseCode.ACCOUNT_WRONG_PASSWORD;
         if (exception != null) {
-            if (exception instanceof DisabledException) {
-                code = ResponseCode.ACCOUNT_DISABLED;
-            } else if (exception instanceof UsernameNotFoundException) {
-                code = ResponseCode.ACCOUNT_UNKNOWN;
-            } else if (exception instanceof LockedException) {
-                code = ResponseCode.ACCOUNT_LOCKED;
-            } else if (exception instanceof BadCredentialsException) {
-                code = ResponseCode.ACCOUNT_WRONG_PASSWORD;
-            }
-            loginService.doLoginError(code, loginDataVO);
+//            if (exception instanceof DisabledException) {
+//                code = ResponseCode.ACCOUNT_DISABLED;
+//            } else if (exception instanceof UsernameNotFoundException) {
+//                code = ResponseCode.ACCOUNT_UNKNOWN;
+//            } else if (exception instanceof LockedException) {
+//                code = ResponseCode.ACCOUNT_LOCKED;
+//            } else if (exception instanceof BadCredentialsException) {
+//                code = ResponseCode.ACCOUNT_WRONG_PASSWORD;
+//            }
+            //TODO 用户不存在需要单独处理,不然没有sessionUser会报错
+//            loginService.doLoginError(code, loginDataVO);
         }
         return fail(code);
     }
@@ -91,6 +88,8 @@ public class LoginController extends BaseController {
 
     private HttpSession getRequestSession(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
+        if (session == null)
+            session = request.getSession(true);
         return session;
     }
 
