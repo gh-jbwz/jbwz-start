@@ -51,6 +51,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
         return fastJsonHttpMessageConverter;
     }
 
+    /*界面返回的数据判断*/
     private static final String KEY_DATA = "data";
     private ValueFilter jsonValueFilter = new ValueFilter() {
         @Override

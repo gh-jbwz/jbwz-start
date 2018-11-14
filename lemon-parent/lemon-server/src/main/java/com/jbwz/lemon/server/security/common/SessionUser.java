@@ -83,17 +83,6 @@ public class SessionUser implements UserDetails {
         this.sessionId = sessionId;
     }
 
-    public SessionUser(Integer userId, Long communityId, String password,
-                       String username, String realName,
-                       Set<GrantedAuthority> authorities) {
-        this.userId = userId;
-        this.password = password;
-        this.username = username;
-        this.realName = realName;
-        if (authorities != null) {
-            this.authorities.addAll(authorities);
-        }
-    }
 
     public SessionUser(Integer userId, String password, String username, String realName,
                        Set<GrantedAuthority> authorities) {

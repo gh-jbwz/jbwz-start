@@ -35,7 +35,7 @@ public class UserServiceImpl extends AbstractFormLoginService implements UserSer
         }
         Set<GrantedAuthority> aset = new HashSet<GrantedAuthority>();
         aset.add(new SimpleGrantedAuthority("/**"));
-        return createSessionUser(user.getUserId(), user.getUserName(), user.getPassword(), user.getNickName(), aset, user.getStatus(), user.getUpdateTime(), 0);
+        return createSessionUser(user, aset);
     }
 
     @Override

@@ -33,23 +33,15 @@ public class SecurityMVCConfig extends WebSecurityConfigurerAdapter {
     static {
 //  these urls  can access for ANYONE
         STATIC_RESOURCES_URL.add("/favicon.ico");
-        STATIC_RESOURCES_URL.add("/image/**");
-        STATIC_RESOURCES_URL.add("/img/**");
-        STATIC_RESOURCES_URL.add("/css/**");
-        STATIC_RESOURCES_URL.add("/js/**");
         STATIC_RESOURCES_URL.add("/webjars/**");
-        STATIC_RESOURCES_URL.add("/html/**");
         STATIC_RESOURCES_URL.add("/static/**");
-        STATIC_RESOURCES_URL.add("/plugins/**");
         ANYONE_ACCESS_URL.addAll(STATIC_RESOURCES_URL);
         ANYONE_ACCESS_URL.add("/login-error");
-        ANYONE_ACCESS_URL.add("/logout-success");
         ANYONE_ACCESS_URL.add("/login");
         ANYONE_ACCESS_URL.add("/error");
         ANYONE_ACCESS_URL.add("/");
         ANYONE_ACCESS_URL.add("/index");
-        ANYONE_ACCESS_URL.add("/user/findMobileNo");
-        ANYONE_ACCESS_URL.add("/user/regSave");
+        ANYONE_ACCESS_URL.add("/user/save");
     }
 
     public static boolean isNotStaticUrl(String path) {
@@ -60,6 +52,7 @@ public class SecurityMVCConfig extends WebSecurityConfigurerAdapter {
         }
         return true;
     }
+
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -84,11 +77,13 @@ public class SecurityMVCConfig extends WebSecurityConfigurerAdapter {
                 .logout().permitAll()
                 .logoutSuccessUrl("/logout-success").permitAll()
         ;
+//        http.sessionManagement().invalidSessionStrategy(new SimpleRedirectInvalidSessionStrategy("/login"));
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+        auth.userDetailsService(userDetailsService)
+                .passwordEncoder(passwordEncoder());
     }
 
 
