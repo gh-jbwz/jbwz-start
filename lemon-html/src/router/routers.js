@@ -6,7 +6,7 @@ export default [
     {
         path: '/',
         component: resolve => require(['./layout/Body.vue'], resolve),
-        meta: {title: '说明页'},
+        meta: {title: '说明页', requiredAuth: false},
         children: [
             {
                 path: '/dashboard',
@@ -70,20 +70,21 @@ export default [
                 meta: {title: '权限测试', permission: true}
             },
             {
-                path: '/404',
-                component: resolve => require(['./view/404.vue'], resolve),
-                meta: {title: '404'}
-            },
-            {
                 path: '/403',
                 component: resolve => require(['./view/403.vue'], resolve),
-                meta: {title: '403'}
+                meta: {title: '403', requiredAuth: false}
             }
         ]
     },
     {
         path: '/login',
-        component: resolve => require(['./view/Login.vue'], resolve)
+        component: resolve => require(['./view/Login.vue'], resolve),
+        meta: {requiredAuth: false}
+    },
+    {
+        path: '/404',
+        component: resolve => require(['./view/404.vue'], resolve),
+        meta: {title: '404', requiredAuth: false}
     },
     {
         path: '*',
@@ -105,7 +106,7 @@ function lazyLoadView(AsyncView) {
         // Time before giving up trying to load the component.
         // Default: Infinity (milliseconds).
         timeout: 10000,
-    })
+    });
 
     return Promise.resolve({
         functional: true,

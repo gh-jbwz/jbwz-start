@@ -31,7 +31,7 @@
             return {
                 ruleForm: {
                     username: 'yyh',
-                    password: 'yyh'
+                    password: ''
                 },
                 rules: {
                     username: [
@@ -43,36 +43,31 @@
                 }
             }
         },
+        created: function () {
+            localStorage.clear();
+        },
         methods: {
             submitForm(formName) {
-                localStorage.clear();
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
                         this.$axios.post("login", {
                             "username": this.ruleForm.username,
                             "password": this.ruleForm.password
                         }).then((res) => {
-                            console.info("登陆界面返回信息", res)
-                            if (res.data.code == 2001) {
+                            let data = res.data;
+                            if (data.code == 2001) {
                                 Message({
                                     // element ui 的消息弹窗组件,类似toast
                                     showClose: true,
                                     message: data.msg,
-                                    type: "info"
+                                    type: "error"
                                 });
                             } else {
                                 localStorage.setItem("token", this.ruleForm.username);
+                                this.$router.push('/');
                             }
-                            console.info("登陆成功后返回信息>>>", data);
-                        })
-                        this.$router.push('/');
-                    } else {
-                        Message({
-                            // element ui 的消息弹窗组件,类似toast
-                            showClose: true,
-                            message: "请求登陆错误",
-                            type: "error"
                         });
+                    } else {
                         return false;
                     }
                 });

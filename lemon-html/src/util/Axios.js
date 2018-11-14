@@ -40,24 +40,31 @@ Axios.interceptors.request.use(
 Axios.interceptors.response.use(
     res => {
         console.info("服务器返回信息>>>", res);
-        if (res.data.code) {
+        let code = res.data.code;
+        let data = res.data.data;
+        if (code != undefined) {
             //处理业务逻辑错误码
             console.info("code>>>", res);
-            if (res.data.code == 0) {
+            if (code == 0) {
                 return res;
             } else {
-                if (res.data.code == 2100) {
+                if (code == 2001) {//密码错误
+                    return res;
+                }
+                if (code == 2100) {//未登录
                     router.push({
                         path: "/login"
                     });
                 }
                 Message({
                     showClose: true,
-                    message: res.data.msg,
+                    message: data.msg,
                     type: "error"
                 });
-                return Promise.reject(res.data.msg);
+                return Promise.reject(data.msg);
             }
+        } else {
+            return res;
         }
     },
     error => {
