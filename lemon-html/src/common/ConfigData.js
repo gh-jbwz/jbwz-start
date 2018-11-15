@@ -1,3 +1,3 @@
 export default {
-    pageSize: 30
+    pageSize: 15
 }

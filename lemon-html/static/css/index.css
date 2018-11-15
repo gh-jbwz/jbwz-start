@@ -1,0 +1,13 @@
+
+.content-head-box {
+    margin-bottom: 10px;
+}
+
+.content-head-box .head-left {
+    margin-right: 10px;
+}
+
+.content-head-box .search-input {
+    width: 300px;
+    display: inline-block;
+}
