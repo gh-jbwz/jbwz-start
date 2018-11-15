@@ -8,8 +8,8 @@ import com.jbwz.lemon.server.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -42,8 +42,8 @@ public class UserController extends BaseController {
         return success();
     }
 
-    @RequestMapping(value = "/detail")
-    public ResponseJson findById(@RequestParam("id") Integer id) {
+    @RequestMapping(value = "/detail/{id}")
+    public ResponseJson findById(@PathVariable("id") Integer id) {
         User user = userService.findById(id);
         return success(user);
     }

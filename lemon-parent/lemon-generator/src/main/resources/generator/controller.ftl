@@ -10,6 +10,7 @@ import ${tableClass.fullClassName};
 import com.jbwz.lemon.server.service.${tableClass.shortClassName}${serviceSuffix};
 import com.jbwz.lemon.server.base.BaseController;
 import com.jbwz.lemon.server.base.ResponseJson;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController
 @RequestMapping("/${tableClass.lowClassName}")
@@ -36,8 +37,8 @@ public class ${tableClass.shortClassName}${classNameSuffix} extends BaseControll
     return success();
   }
 
-  @RequestMapping(value = "/detail")
-  public ResponseJson findById(@RequestParam("id") Integer id) {
+  @RequestMapping(value = "/detail/{id}")
+  public ResponseJson findById(@PathVariable("id") Integer id) {
     ${tableClass.shortClassName} ${tableClass.lowClassName} = ${tableClass.lowClassName}${serviceSuffix}.findById(id);
     return success(${tableClass.lowClassName});
   }
