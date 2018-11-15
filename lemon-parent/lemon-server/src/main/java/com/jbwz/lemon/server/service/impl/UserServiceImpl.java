@@ -29,7 +29,7 @@ public class UserServiceImpl extends AbstractFormLoginService implements UserSer
 
     @Override
     protected UserDetails login(String username) throws UsernameNotFoundException {
-        User user = userDao.findByUserName(username);
+        User user = userDao.findByUserNo(username);
         if (user == null) {
             throw new UsernameNotFoundException("no user");
         }
