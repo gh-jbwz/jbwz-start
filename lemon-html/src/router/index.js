@@ -11,7 +11,7 @@ const router = new VueRouter({
 //使用钩子函数对路由进行权限跳转
 router.beforeEach((to, from, next) => {
     let requiredAuth = to.meta.requiredAuth;
-
+    console.log("请求vue路径:", to.fullPath,"<=====",from.fullPath)
     //需要认证的再判断是否有token
     if (requiredAuth == undefined || requiredAuth) {
         if (localStorage.token) {  // 获取当前的token是否存在

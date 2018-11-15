@@ -9,6 +9,11 @@ export default [
         meta: {title: '说明页', requiredAuth: false},
         children: [
             {
+                path: '/userList',
+                component: resolve => require(['./view/user/list.vue'], resolve),
+                meta: {title: '员工列表'}
+            },
+            {
                 path: '/dashboard',
                 component: resolve => require(['./view/Dashboard.vue'], resolve),
                 meta: {title: '首页'}
@@ -70,6 +75,11 @@ export default [
                 meta: {title: '权限测试', permission: true}
             },
             {
+                path: '/4041',
+                component: resolve => require(['./view/404.vue'], resolve),
+                meta: {title: '404', requiredAuth: false}
+            },
+            {
                 path: '/403',
                 component: resolve => require(['./view/403.vue'], resolve),
                 meta: {title: '403', requiredAuth: false}
@@ -88,7 +98,7 @@ export default [
     },
     {
         path: '*',
-        redirect: '/404'
+        redirect: '/4041'
     }
 ]
 
