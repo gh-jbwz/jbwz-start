@@ -41,10 +41,9 @@ Axios.interceptors.response.use(
     res => {
         console.info("服务器返回信息>>>", res);
         let code = res.data.code;
-        let data = res.data.data;
+        let msg = res.data.msg;
         if (code != undefined) {
             //处理业务逻辑错误码
-            console.info("code>>>", res);
             if (code == 0) {
                 return res;
             } else {
@@ -58,10 +57,10 @@ Axios.interceptors.response.use(
                 }
                 Message({
                     showClose: true,
-                    message: data.msg,
+                    message: msg,
                     type: "error"
                 });
-                return Promise.reject(data.msg);
+                return Promise.reject(msg);
             }
         } else {
             return res;

@@ -63,7 +63,8 @@
                                     type: "error"
                                 });
                             } else {
-                                localStorage.setItem("token", this.ruleForm.username);
+                                localStorage.setItem(this.ConfigData.cookie.tokenName, data.data.userId);
+                                localStorage.setItem(this.ConfigData.cookie.userName, data.data.userName);
                                 this.$router.push('/');
                             }
                         });
