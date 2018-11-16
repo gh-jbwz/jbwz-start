@@ -41,7 +41,7 @@ public class SecurityMVCConfig extends WebSecurityConfigurerAdapter {
         ANYONE_ACCESS_URL.add("/error");
         ANYONE_ACCESS_URL.add("/");
         ANYONE_ACCESS_URL.add("/index");
-        ANYONE_ACCESS_URL.add("/user/save");
+        ANYONE_ACCESS_URL.add("/register");
     }
 
     public static boolean isNotStaticUrl(String path) {

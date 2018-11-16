@@ -32,6 +32,7 @@ public class UserController extends BaseController {
 
     @RequestMapping(value = "/save")
     public ResponseJson save(User user) {
+        user.setPassword(user.getUserNo());
         userService.insert(user);
         return success();
     }

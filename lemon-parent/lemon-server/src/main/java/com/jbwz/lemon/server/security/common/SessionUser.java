@@ -16,7 +16,7 @@ public class SessionUser implements UserDetails {
     // ================================================================================================
     private Integer userId;
     private String password;
-    private String username;
+    private String userName;
     private String realName;
     private Set<GrantedAuthority> authorities = new HashSet<>();
     private boolean accountNonExpired;
@@ -43,8 +43,8 @@ public class SessionUser implements UserDetails {
         this.password = password;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getRealName() {
@@ -84,11 +84,11 @@ public class SessionUser implements UserDetails {
     }
 
 
-    public SessionUser(Integer userId, String password, String username, String realName,
+    public SessionUser(Integer userId, String password, String userName, String realName,
                        Set<GrantedAuthority> authorities) {
         this.userId = userId;
         this.password = password;
-        this.username = username;
+        this.userName = userName;
         this.realName = realName;
         this.authorities.addAll(authorities);
     }
@@ -106,7 +106,7 @@ public class SessionUser implements UserDetails {
 
     @Override
     public String getUsername() {
-        return this.username;
+        return this.userName;
     }
 
     @Override
@@ -134,8 +134,8 @@ public class SessionUser implements UserDetails {
         stringBuilder.append("userId=");
         stringBuilder.append(this.userId);
         stringBuilder.append(",");
-        stringBuilder.append("username=");
-        stringBuilder.append(this.username);
+        stringBuilder.append("userName=");
+        stringBuilder.append(this.userName);
         stringBuilder.append(",");
         stringBuilder.append("realName=");
         stringBuilder.append(this.realName);

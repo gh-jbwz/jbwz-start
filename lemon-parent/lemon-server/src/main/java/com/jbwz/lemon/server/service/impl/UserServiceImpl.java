@@ -3,6 +3,7 @@ package com.jbwz.lemon.server.service.impl;
 import com.jbwz.lemon.server.base.BaseDao;
 import com.jbwz.lemon.server.dao.UserDao;
 import com.jbwz.lemon.server.entity.User;
+import com.jbwz.lemon.server.security.common.SessionUtils;
 import com.jbwz.lemon.server.security.service.AbstractFormLoginService;
 import com.jbwz.lemon.server.service.UserService;
 import com.jbwz.lemon.server.vo.LoginDataVO;
@@ -50,7 +51,7 @@ public class UserServiceImpl extends AbstractFormLoginService implements UserSer
 
     @Override
     protected Object loginSuccess(LoginDataVO loginDataVO) {
-        return null;
+        return userDao.findById(SessionUtils.getSessionUser().getUserId()).get();
     }
 
     @Override
