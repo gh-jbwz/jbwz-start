@@ -9,7 +9,7 @@ exports.parseResponse = function (res) {
         "total": total
     }
 }
-exports.fillTable = function (vm, res) {
+exports.fillTableData = function (vm, res) {
     let data = this.parseResponse(res);
     vm.tableData = data.content;
     vm.total = data.total;

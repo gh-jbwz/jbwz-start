@@ -24,7 +24,6 @@
 </template>
 
 <script>
-    import {Message} from "element-ui";
 
     export default {
         data: function () {
@@ -48,6 +47,7 @@
         },
         methods: {
             submitForm(formName) {
+                let vm = this;
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
                         this.$axios.post("login", {
@@ -56,7 +56,7 @@
                         }).then((res) => {
                             let data = res.data;
                             if (data.code == 2001) {
-                                Message({
+                                vm.$message({
                                     // element ui 的消息弹窗组件,类似toast
                                     showClose: true,
                                     message: data.msg,
@@ -65,7 +65,7 @@
                             } else {
                                 localStorage.setItem(this.ConfigData.cookie.tokenName, data.data.userId);
                                 localStorage.setItem(this.ConfigData.cookie.userName, data.data.userName);
-                                this.$router.push('/');
+                                vm.$router.push('/');
                             }
                         });
                     } else {
