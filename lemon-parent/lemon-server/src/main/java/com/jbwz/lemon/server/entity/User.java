@@ -1,6 +1,6 @@
 package com.jbwz.lemon.server.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.alibaba.fastjson.annotation.JSONField;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -24,6 +24,7 @@ public class User {
     private String nickName;
 
     // 密码
+    @JSONField(serialize = false)
     private String password;
 
     // 头像
@@ -42,26 +43,40 @@ public class User {
     private String mobile;
 
     // 生日
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JSONField(format = "yyyy-MM-dd")
     private Date birthday;
+    //入职时间
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JSONField(format = "yyyy-MM-dd")
+    private Date entryDate;
 
     // 状态 0-可用 1-锁定 9 删除
     private String status;
 
     // 创建人
+    @JSONField(serialize = false)
     private String createBy;
 
     // 创建时间
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
     // 更新人
+    @JSONField(serialize = false)
     private String updateBy;
 
     // 更新时间
+    @JSONField(serialize = false)
     private Date updateTime;
+
+    public Date getEntryDate() {
+        return entryDate;
+    }
+
+    public void setEntryDate(Date entryDate) {
+        this.entryDate = entryDate;
+    }
 
     public Integer getUserId() {
         return userId;

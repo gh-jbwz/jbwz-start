@@ -74,7 +74,7 @@ public class SecurityMVCConfig extends WebSecurityConfigurerAdapter {
                 .successForwardUrl("/login-success")
                 .failureForwardUrl("/login-error").permitAll()
                 .and()
-                .logout().permitAll()
+                .logout()
                 .logoutSuccessUrl("/logout-success").permitAll()
         ;
 //        http.sessionManagement().invalidSessionStrategy(new SimpleRedirectInvalidSessionStrategy("/login"));
