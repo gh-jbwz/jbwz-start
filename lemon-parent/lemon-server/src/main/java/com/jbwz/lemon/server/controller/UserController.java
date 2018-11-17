@@ -5,6 +5,7 @@ import com.jbwz.lemon.server.base.ResponseJson;
 import com.jbwz.lemon.server.entity.User;
 import com.jbwz.lemon.server.security.common.SessionUtils;
 import com.jbwz.lemon.server.service.UserService;
+import com.jbwz.lemon.server.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -33,6 +34,7 @@ public class UserController extends BaseController {
     @RequestMapping(value = "/save")
     public ResponseJson save(User user) {
         user.setPassword(user.getUserNo());
+        user.setCreateTime(DateUtil.nowDateTime());
         userService.insert(user);
         return success();
     }
