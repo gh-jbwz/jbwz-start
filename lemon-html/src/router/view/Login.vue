@@ -63,8 +63,8 @@
                                     type: "error"
                                 });
                             } else {
-                                localStorage.setItem(this.ConfigData.cookie.tokenName, data.data.userId);
-                                localStorage.setItem(this.ConfigData.cookie.userName, data.data.userName);
+                                vm.$cookies.setToken(data.data.userId);
+                                vm.$cookies.setUserName(data.data.userName);
                                 vm.$router.push('/');
                             }
                         });

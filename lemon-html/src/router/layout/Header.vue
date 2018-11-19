@@ -60,7 +60,7 @@
         methods: {
             //设置head数据
             setHeadData() {
-                this.userName = localStorage.getItem(this.ConfigData.cookie.userName);
+                this.userName = this.$cookies.getUserName();
                 this.imageUrl = 'static/img/my.png';
             },
             // 用户名下拉菜单选择事件

@@ -101,7 +101,7 @@
                 </el-table>
                 <div class="pagination" v-if="total>0">
                     <el-pagination background @current-change="list" layout="prev, pager, next"
-                                   :total="total" :page-size="ConfigData.pageSize">
+                                   :total="total" :page-size="$configData.pageSize">
                     </el-pagination>
                 </div>
             </div>
@@ -209,12 +209,12 @@
                 this.loading = true;
                 this.$axios.get('user/page', {
                     params: {
-                        "page": this.CommonUtil.getPageNumber(pageNumber),
-                        "size": this.ConfigData.pageSize,
+                        "page": this.$commonUtil.getPageNumber(pageNumber),
+                        "size": this.$configData.pageSize,
                         "userName": this.search_word
                     }
                 }).then(function (res) {
-                    vm.CommonUtil.fillTableData(vm, res);
+                    vm.$commonUtil.fillTableData(vm, res);
                 })
             },
             add: function () {

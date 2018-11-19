@@ -15,7 +15,7 @@ router.beforeEach((to, from, next) => {
     console.log("请求vue路径:", to.fullPath, "<=====", from.fullPath)
     //需要认证的再判断是否有token
     if (requiredAuth == undefined || requiredAuth) {
-        if (localStorage.getItem(Vue.prototype.ConfigData.cookie.tokenName)) {  // 获取当前的token是否存在
+        if (Vue.prototype.$cookies.getToken()) {  // 获取当前的token是否存在
             // 简单的判断IE10及以下不进入富文本编辑器，该组件不兼容
             if (navigator.userAgent.indexOf('MSIE') > -1 && to.path === '/editor') {
                 Vue.prototype.$alert('富文本编辑器不兼容IE10及以下浏览器，请使用更高版本的浏览器查看', '浏览器不兼容通知', {

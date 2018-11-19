@@ -4,6 +4,7 @@ import router from './router';
 import axios from './util/Axios';
 import ElementUI from 'element-ui';
 import ConfigData from "./common/ConfigData";
+import Cookies from "./common/Cookies";
 import CommonUtil from "./util/CommonUtil";
 import bus from "./components/common/bus";
 import 'element-ui/lib/theme-chalk/index.css'; // 默认主题
@@ -16,8 +17,9 @@ import "babel-polyfill";
 window.bus = bus;
 Vue.use(ElementUI, {size: 'small'});
 Vue.prototype.$axios = axios;
-Vue.prototype.ConfigData = ConfigData;
-Vue.prototype.CommonUtil = CommonUtil;
+Vue.prototype.$cookies = Cookies;
+Vue.prototype.$configData = ConfigData;
+Vue.prototype.$commonUtil = CommonUtil;
 
 const app = new Vue({
     router,

@@ -7,7 +7,6 @@
                         <img src="static/img/img.jpg" class="user-avator" alt="">
                         <div class="user-info-cont">
                             <div class="user-info-name">{{name}}</div>
-                            <div>{{role}}</div>
                         </div>
                     </div>
                     <div class="user-info-list">上次登录时间：<span>2018-01-01</span></div>
@@ -190,9 +189,6 @@
             Schart
         },
         computed: {
-            role() {
-                return this.name === 'admin' ? '超级管理员' : '普通用户';
-            }
         },
         created() {
             this.handleListener();
@@ -214,7 +210,7 @@
                 })
             },
             handleListener() {
-                bus.$on(this.ConfigData.busCollapseName, this.handleBus);
+                bus.$on(this.$configData.busCollapseName, this.handleBus);
                 // 调用renderChart方法对图表进行重新渲染
                 window.addEventListener('resize', this.renderChart)
             },
