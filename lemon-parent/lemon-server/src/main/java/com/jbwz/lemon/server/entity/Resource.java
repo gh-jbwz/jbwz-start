@@ -1,20 +1,23 @@
 package com.jbwz.lemon.server.entity;
 
-import java.util.Date;
+import com.alibaba.fastjson.annotation.JSONField;
+
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "jbwz_resource")
 public class Resource {
     // 资源类型
     @Id
-    private Integer resouceId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer resourceId;
 
     // 资源名称
-    private String resouceName;
+    private String resourceName;
 
     // 资源路径
-    private String resouceUrl;
+    private String resourceUrl;
 
     // 状态 0-可用 1-锁定 9 删除
     private String status;
@@ -23,36 +26,67 @@ public class Resource {
     private Integer createBy;
 
     // 创建时间
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
     // 更新人
     private Integer updateBy;
+    // 类型
+    private String type;
+    // 图标
+    private String icon;
+    // 界面路由
+    private String router;
 
     // 更新时间
     private Date updateTime;
 
-    public Integer getResouceId() {
-        return resouceId;
+    public Integer getResourceId() {
+        return resourceId;
     }
 
-    public void setResouceId(Integer resouceId) {
-        this.resouceId = resouceId;
+    public void setResourceId(Integer resourceId) {
+        this.resourceId = resourceId;
     }
 
-    public String getResouceName() {
-        return resouceName;
+    public String getResourceName() {
+        return resourceName;
     }
 
-    public void setResouceName(String resouceName) {
-        this.resouceName = resouceName;
+    public void setResourceName(String resourceName) {
+        this.resourceName = resourceName;
     }
 
-    public String getResouceUrl() {
-        return resouceUrl;
+    public String getResourceUrl() {
+        return resourceUrl;
     }
 
-    public void setResouceUrl(String resouceUrl) {
-        this.resouceUrl = resouceUrl;
+    public void setResourceUrl(String resourceUrl) {
+        this.resourceUrl = resourceUrl;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
+
+    public String getRouter() {
+        return router;
+    }
+
+    public void setRouter(String router) {
+        this.router = router;
     }
 
     public String getStatus() {

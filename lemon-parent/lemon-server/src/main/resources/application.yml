@@ -22,7 +22,7 @@ spring:
         physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
   datasource:
     druid:
-      url: jdbc:mysql://localhost:3306/jbwz?useUnicode=true&characterEncoding=UTF-8
+      url: jdbc:mysql://localhost:3306/jbwz?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2b8
       username:  root
       password: root
       initialSize: 3
@@ -55,7 +55,7 @@ spring:
   profiles: pro
   datasource:
     druid:
-      url: jdbc:mysql://mysql-server:3306/jbwz?useUnicode=true&characterEncoding=UTF-8
+      url: jdbc:mysql://mysql-server:3306/jbwz?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2b8
       username: pro
       password: pro
 
