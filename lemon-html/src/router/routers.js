@@ -9,7 +9,12 @@ export default [
         meta: {title: '说明页', requiredAuth: false},
         children: [
             {
-                path: '/userList',
+                path: '/resource',
+                component: resolve => require(['./view/resource/list.vue'], resolve),
+                meta: {title: '资源列表'}
+            },
+            {
+                path: '/user',
                 component: resolve => require(['./view/user/list.vue'], resolve),
                 meta: {title: '员工列表'}
             },

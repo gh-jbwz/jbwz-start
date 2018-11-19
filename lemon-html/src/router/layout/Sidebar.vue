@@ -43,12 +43,24 @@
                 items: [
                     {
                         icon: 'el-icon-lx-home',
+                        index: 'menu',
+                        title: '系统设置',
+                        subs: [
+                            {
+                                icon: '',
+                                index: 'resource',
+                                title: '资源管理'
+                            }
+                        ]
+                    },
+                    {
+                        icon: 'el-icon-lx-home',
                         index: 'user',
                         title: '员工管理',
                         subs: [
                             {
-                                icon:'',
-                                index: 'userList',
+                                icon: '',
+                                index: 'user',
                                 title: '员工列表'
                             }
                         ]

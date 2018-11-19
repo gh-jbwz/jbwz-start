@@ -3,13 +3,13 @@
         <div class="table">
             <div class="crumbs">
                 <el-breadcrumb separator="/">
-                    <el-breadcrumb-item><i class="el-icon-lx-favor"></i>员工列表</el-breadcrumb-item>
+                    <el-breadcrumb-item><i class="el-icon-lx-favor"></i>菜单管理</el-breadcrumb-item>
                 </el-breadcrumb>
             </div>
             <div class="container" style="border:0px">
                 <div class="content-head-box">
                     <el-button type="primary" icon="add" class="head-left" @click="add">添加</el-button>
-                    <el-input v-model="search_word" placeholder="姓名" class="search-input">
+                    <el-input v-model="search_word" placeholder="名称" class="search-input">
                     </el-input>
                     <el-button type="primary" icon="el-icon-search" @click="list">搜索</el-button>
                 </div>
@@ -17,76 +17,57 @@
                           element-loading-background="rgba(0, 0, 0, 0.8)" :data="tableData" highlight-current-row border
                           style="width: 100%">
                     <el-table-column
-                        prop="userId"
-                        label="id"
+                        prop="resourceId"
+                        label="资源id"
                         header-align="center"
                         align="center"
                     >
                     </el-table-column>
                     <el-table-column
-                        prop="userNo"
-                        label="工号"
+                        prop="resourceName"
+                        label="资源名称"
                         header-align="center"
                         align="center"
                     >
                     </el-table-column>
                     <el-table-column
-                        prop="userName"
-                        label="姓名"
+                        prop="resourceUrl"
+                        label="资源URL"
                         header-align="center"
                         align="center"
                     >
                     </el-table-column>
                     <el-table-column
-                        prop="nickName"
-                        label="昵称"
+                        prop="router"
+                        label="界面路由"
                         header-align="center"
                         align="center"
                     >
                     </el-table-column>
                     <el-table-column
-                        prop="gender"
-                        label="性别"
+                        prop="type"
+                        label="类型"
                         header-align="center"
                         align="center"
                     >
                         <template slot-scope="scope">
-                            <el-tag
-                                :type="scope.row.gender === '0' ? 'danger' : 'primary'"
-                                disable-transitions>{{scope.row.type==='0'?'女':'男'}}
+                            <el-tag :type="scope.row.type === '0' ? 'primary' : 'success'" disable-transitions>
+                                {{scope.row.type==='0'?'菜单':'资源'}}
                             </el-tag>
                         </template>
                     </el-table-column>
                     <el-table-column
-                        prop="birthday"
-                        label="生日"
+                        prop="icon"
+                        label="图标"
                         header-align="center"
                         align="center"
                     >
+                        <template slot-scope="scope">
+                            <i :class='scope.row.icon'></i>
+                        </template>
                     </el-table-column>
                     <el-table-column
-                        prop="mobile"
-                        label="手机号"
-                        header-align="center"
-                        align="center"
-                    >
-                    </el-table-column>
-                    <el-table-column
-                        prop="email"
-                        label="邮箱"
-                        header-align="center"
-                        align="center"
-                    >
-                    </el-table-column>
-                    <el-table-column
-                        prop="entryDate"
-                        label="入职时间"
-                        header-align="center"
-                        align="center"
-                    >
-                    </el-table-column>
-                    <el-table-column
-                        prop="createDate"
+                        prop="createTime"
                         label="创建时间"
                         header-align="center"
                         align="center"
@@ -100,7 +81,6 @@
                         <template slot-scope="scope">
                             <el-button @click="detail(scope.row)" type="text" size="small">查看</el-button>
                             <el-button @click="edit(scope.row)" type="text" size="small">编辑</el-button>
-                            <el-button @click="delete(scope.row)" type="text" size="small">删除</el-button>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -114,38 +94,25 @@
 
 
         <!--添加弹出框 -->
-        <el-dialog :title="dialogTitle" :visible.sync="formVisible" width="45%">
+        <el-dialog :title="dialogTitle" @closed="dialogClosed" :visible.sync="formVisible" width="45%">
             <el-form :rules="rules" ref="ruleForm" :model="ruleForm" size="medium"
                      label-width="100px">
-                <el-input type="hidden" v-model="ruleForm.userId"></el-input>
-                <el-form-item label="工号" prop="userNo">
-                    <el-input v-model="ruleForm.userNo"></el-input>
+                <el-input type="hidden" v-model="ruleForm.resourceId"></el-input>
+                <el-form-item label="资源名称" prop="resourceName">
+                    <el-input v-model="ruleForm.resourceName"></el-input>
                 </el-form-item>
-                <el-form-item label="姓名" prop="userName">
-                    <el-input v-model="ruleForm.userName"></el-input>
+                <el-form-item label="类型" prop="type">
+                    <el-radio v-model="ruleForm.type" label="0">菜单</el-radio>
+                    <el-radio v-model="ruleForm.type" label="1">资源</el-radio>
                 </el-form-item>
-                <el-form-item label="昵称">
-                    <el-input v-model="ruleForm.nickName"></el-input>
+                <el-form-item label="访问URL" prop="resourceUrl">
+                    <el-input v-model="ruleForm.resourceUrl"></el-input>
                 </el-form-item>
-                <el-form-item label="性别">
-                    <el-radio v-model="ruleForm.gender" label="1">男</el-radio>
-                    <el-radio v-model="ruleForm.gender" label="0">女</el-radio>
+                <el-form-item label="界面路由" prop="router">
+                    <el-input v-model="ruleForm.router"></el-input>
                 </el-form-item>
-                <el-form-item label="入职时间">
-                    <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.entryDate"
-                                    value-format="yyyy-MM-dd"
-                                    style="width: 100%;"></el-date-picker>
-                </el-form-item>
-                <el-form-item label="手机号" prop="mobile">
-                    <el-input v-model="ruleForm.mobile"></el-input>
-                </el-form-item>
-                <el-form-item label="邮箱">
-                    <el-input v-model="ruleForm.email"></el-input>
-                </el-form-item>
-                <el-form-item label="生日">
-                    <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.birthday"
-                                    value-format="yyyy-MM-dd"
-                                    style="width: 100%;"></el-date-picker>
+                <el-form-item label="图标" prop="icon">
+                    <el-input v-model="ruleForm.icon"></el-input>
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
@@ -165,36 +132,23 @@
                 dialogTitle: '',
                 isDetailShow: false,
                 ruleForm: {
-                    userId: '',
-                    userNo: '',
-                    userName: '',
-                    nickName: '',
-                    gender: '',
-                    mobile: '',
-                    email: '',
-                    birthday: '',
-                    entryDate: ''
+                    resourceId: '',
+                    resourceName: '',
+                    resourceUrl: '',
+                    router: '',
+                    icon: '',
+                    type: ''
                 },
                 search_word: '',
-                isAdd: false,
                 loading: false,
                 tableData: [],
                 total: 0,
                 rules: {
-                    userNo: [
-                        {required: true, message: '请输入员工工号', trigger: 'blur'},
-                        {min: 3, max: 10, message: '长度在 3 到 10 个字符', trigger: 'blur'}
+                    resourceName: [
+                        {required: true, message: '请输入资源名称', trigger: 'blur'}
                     ],
-                    userName: [
-                        {required: true, message: '请输入员工姓名', trigger: 'blur'},
-                        {min: 2, max: 10, message: '长度在 3 到 10 个字符', trigger: 'blur'}
-                    ],
-                    // createTime: [
-                    //     {type: 'date', required: true, message: '请选择入职时间', trigger: 'change'}
-                    // ],
-                    mobile: [
-                        {required: true, message: '请输入手机号', trigger: 'blur'},
-                        {pattern: /^1[3|5|6|7|8|9]\d{9}$/, message: '请输入正确的手机号'}
+                    type: [
+                        {required: true, message: '请选择类型', trigger: 'blur'},
                     ]
                 }
             }
@@ -203,31 +157,25 @@
             this.list()
         },
         methods: {
-            genderFormat: function (row, column, cellValue) {
-                if (cellValue == "0")
-                    return '女';
-                else if (cellValue == "1")
-                    return '男';
-            },
             list: function (pageNumber) {
                 let vm = this;
                 this.loading = true;
-                this.$axios.get('user/page', {
+                this.$axios.get('resource/page', {
                     params: {
                         "page": this.$commonUtil.getPageNumber(pageNumber),
                         "size": this.$configData.pageSize,
-                        "userName": this.search_word
+                        "resourceName": this.search_word
                     }
                 }).then(function (res) {
                     vm.$commonUtil.fillTableData(vm, res);
                 })
             },
             add: function () {
-                this.dialogTitle = "添加员工";
+                this.dialogTitle = "添加资源";
                 this.formVisible = true;
             },
             edit: function (row) {
-                this.dialogTitle = "编辑员工";
+                this.dialogTitle = "编辑资源";
                 this.setRuleFormData(row);
                 this.formVisible = true;
             },
@@ -238,28 +186,23 @@
                 this.formVisible = true;
             },
             setRuleFormData: function (row) {
-                this.ruleForm.userId = row.userId;
-                this.ruleForm.userName = row.userName;
-                this.ruleForm.userNo = row.userNo;
-                this.ruleForm.nickName = row.nickName;
-                this.ruleForm.mobile = row.mobile;
-                this.ruleForm.gender = row.gender;
-                this.ruleForm.email = row.email;
-                this.ruleForm.birthday = row.birthday;
-                this.ruleForm.entryDate = row.entryDate;
+                this.ruleForm.resourceId = row.resourceId;
+                this.ruleForm.resourceName = row.resourceName;
+                this.ruleForm.icon = row.icon;
+                this.ruleForm.resourceUrl = row.resourceUrl;
+                this.ruleForm.router = row.router;
+                this.ruleForm.type = row.type;
             },
             delete: function (row) {
             },
             cancel: function (formName) {
-                this.isDetailShow = false;
                 this.formVisible = false;
-                this.$refs[formName].resetFields();
             },
             save: function (formName) {
                 let vm = this;
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                        this.$axios.post('user/save', this.ruleForm)
+                        this.$axios.post('resource/save', this.ruleForm)
                             .then(function (res) {
                                 //保存完成，重置所有输入框
                                 vm.$refs[formName].resetFields();
@@ -271,6 +214,14 @@
                         return false;
                     }
                 });
+            },
+            dialogClosed: function () {
+                this.$refs['ruleForm'].resetFields();
+                if (this.isDetailShow) {
+                    this.isDetailShow = false;
+                } else {
+                }
+                this.formVisible = false;
             }
         }
     }
