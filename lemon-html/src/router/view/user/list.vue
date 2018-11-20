@@ -53,7 +53,7 @@
                         <template slot-scope="scope">
                             <el-tag
                                 :type="scope.row.gender === '0' ? 'danger' : 'primary'"
-                                disable-transitions>{{scope.row.type==='0'?'女':'男'}}
+                                disable-transitions>{{scope.row.gender==='0'?'女':'男'}}
                             </el-tag>
                         </template>
                     </el-table-column>
@@ -100,7 +100,7 @@
                         <template slot-scope="scope">
                             <el-button @click="detail(scope.row)" type="text" size="small">查看</el-button>
                             <el-button @click="edit(scope.row)" type="text" size="small">编辑</el-button>
-                            <el-button @click="delete(scope.row)" type="text" size="small">删除</el-button>
+                            <el-button @click="deleted(scope.row)" type="text" size="small">删除</el-button>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -114,24 +114,26 @@
 
 
         <!--添加弹出框 -->
-        <el-dialog :title="dialogTitle" :visible.sync="formVisible" width="45%">
+        <el-dialog :title="dialogTitle" @closed="dialogClosed" :visible.sync="formVisible" width="45%">
             <el-form :rules="rules" ref="ruleForm" :model="ruleForm" size="medium"
                      label-width="100px">
-                <el-input type="hidden" v-model="ruleForm.userId"></el-input>
+                <el-form-item label="id" hidden="hidden" prop="userId">
+                    <el-input type="hidden" v-model="ruleForm.userId"></el-input>
+                </el-form-item>
                 <el-form-item label="工号" prop="userNo">
                     <el-input v-model="ruleForm.userNo"></el-input>
                 </el-form-item>
                 <el-form-item label="姓名" prop="userName">
                     <el-input v-model="ruleForm.userName"></el-input>
                 </el-form-item>
-                <el-form-item label="昵称">
+                <el-form-item label="昵称" prop="nickName">
                     <el-input v-model="ruleForm.nickName"></el-input>
                 </el-form-item>
-                <el-form-item label="性别">
+                <el-form-item label="性别" prop="gender">
                     <el-radio v-model="ruleForm.gender" label="1">男</el-radio>
                     <el-radio v-model="ruleForm.gender" label="0">女</el-radio>
                 </el-form-item>
-                <el-form-item label="入职时间">
+                <el-form-item label="入职时间" prop="entryDate">
                     <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.entryDate"
                                     value-format="yyyy-MM-dd"
                                     style="width: 100%;"></el-date-picker>
@@ -139,10 +141,10 @@
                 <el-form-item label="手机号" prop="mobile">
                     <el-input v-model="ruleForm.mobile"></el-input>
                 </el-form-item>
-                <el-form-item label="邮箱">
+                <el-form-item label="邮箱" prop="email">
                     <el-input v-model="ruleForm.email"></el-input>
                 </el-form-item>
-                <el-form-item label="生日">
+                <el-form-item label="生日" prop="birthday">
                     <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.birthday"
                                     value-format="yyyy-MM-dd"
                                     style="width: 100%;"></el-date-picker>
@@ -189,9 +191,6 @@
                         {required: true, message: '请输入员工姓名', trigger: 'blur'},
                         {min: 2, max: 10, message: '长度在 3 到 10 个字符', trigger: 'blur'}
                     ],
-                    // createTime: [
-                    //     {type: 'date', required: true, message: '请选择入职时间', trigger: 'change'}
-                    // ],
                     mobile: [
                         {required: true, message: '请输入手机号', trigger: 'blur'},
                         {pattern: /^1[3|5|6|7|8|9]\d{9}$/, message: '请输入正确的手机号'}
@@ -203,24 +202,9 @@
             this.list()
         },
         methods: {
-            genderFormat: function (row, column, cellValue) {
-                if (cellValue == "0")
-                    return '女';
-                else if (cellValue == "1")
-                    return '男';
-            },
-            list: function (pageNumber) {
-                let vm = this;
+            list: function (currentPage) {
                 this.loading = true;
-                this.$axios.get('user/page', {
-                    params: {
-                        "page": this.$commonUtil.getPageNumber(pageNumber),
-                        "size": this.$configData.pageSize,
-                        "userName": this.search_word
-                    }
-                }).then(function (res) {
-                    vm.$commonUtil.fillTableData(vm, res);
-                })
+                this.getPageTable(this, currentPage, 'user/page', {"userName": this.search_word})
             },
             add: function () {
                 this.dialogTitle = "添加员工";
@@ -248,7 +232,8 @@
                 this.ruleForm.birthday = row.birthday;
                 this.ruleForm.entryDate = row.entryDate;
             },
-            delete: function (row) {
+            deleted: function (row) {
+                this.deleteOneRow(this, '');
             },
             cancel: function (formName) {
                 this.isDetailShow = false;
@@ -256,21 +241,10 @@
                 this.$refs[formName].resetFields();
             },
             save: function (formName) {
-                let vm = this;
-                this.$refs[formName].validate((valid) => {
-                    if (valid) {
-                        this.$axios.post('user/save', this.ruleForm)
-                            .then(function (res) {
-                                //保存完成，重置所有输入框
-                                vm.$refs[formName].resetFields();
-                                vm.list(0);
-                            })
-                        this.formVisible = false;
-                    } else {
-                        console.log('error submit!!');
-                        return false;
-                    }
-                });
+                this.commitRuleForm(this, formName, 'user/save')
+            },
+            dialogClosed: function () {
+                this.closeDialogRuleForm(this);
             }
         }
     }

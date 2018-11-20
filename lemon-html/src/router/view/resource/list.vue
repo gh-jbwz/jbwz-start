@@ -17,6 +17,7 @@
                           element-loading-background="rgba(0, 0, 0, 0.8)" :data="tableData" highlight-current-row border
                           style="width: 100%">
                     <el-table-column
+                        hidden="hidden"
                         prop="resourceId"
                         label="资源id"
                         header-align="center"
@@ -97,7 +98,9 @@
         <el-dialog :title="dialogTitle" @closed="dialogClosed" :visible.sync="formVisible" width="45%">
             <el-form :rules="rules" ref="ruleForm" :model="ruleForm" size="medium"
                      label-width="100px">
-                <el-input type="hidden" v-model="ruleForm.resourceId"></el-input>
+                <el-form-item label="id" hidden="hidden" prop="resourceId">
+                    <el-input type="hidden" v-model="ruleForm.resourceId"></el-input>
+                </el-form-item>
                 <el-form-item label="资源名称" prop="resourceName">
                     <el-input v-model="ruleForm.resourceName"></el-input>
                 </el-form-item>
@@ -158,17 +161,7 @@
         },
         methods: {
             list: function (pageNumber) {
-                let vm = this;
-                this.loading = true;
-                this.$axios.get('resource/page', {
-                    params: {
-                        "page": this.$commonUtil.getPageNumber(pageNumber),
-                        "size": this.$configData.pageSize,
-                        "resourceName": this.search_word
-                    }
-                }).then(function (res) {
-                    vm.$commonUtil.fillTableData(vm, res);
-                })
+                this.getPageTable(this, pageNumber, 'resource/page', {"resourceName": this.search_word})
             },
             add: function () {
                 this.dialogTitle = "添加资源";
@@ -193,35 +186,17 @@
                 this.ruleForm.router = row.router;
                 this.ruleForm.type = row.type;
             },
-            delete: function (row) {
+            deleted: function (row) {
+                this.deleteOneRow(this,'');
             },
-            cancel: function (formName) {
+            cancel: function () {
                 this.formVisible = false;
             },
             save: function (formName) {
-                let vm = this;
-                this.$refs[formName].validate((valid) => {
-                    if (valid) {
-                        this.$axios.post('resource/save', this.ruleForm)
-                            .then(function (res) {
-                                //保存完成，重置所有输入框
-                                vm.$refs[formName].resetFields();
-                                vm.list(0);
-                            })
-                        this.formVisible = false;
-                    } else {
-                        console.log('error submit!!');
-                        return false;
-                    }
-                });
+                this.commitRuleForm(this, formName, 'resource/save')
             },
             dialogClosed: function () {
-                this.$refs['ruleForm'].resetFields();
-                if (this.isDetailShow) {
-                    this.isDetailShow = false;
-                } else {
-                }
-                this.formVisible = false;
+                this.closeDialogRuleForm(this);
             }
         }
     }

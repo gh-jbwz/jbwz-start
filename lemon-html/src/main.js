@@ -5,7 +5,7 @@ import axios from './util/Axios';
 import ElementUI from 'element-ui';
 import ConfigData from "./common/ConfigData";
 import Cookies from "./common/Cookies";
-import CommonUtil from "./util/CommonUtil";
+import HandleServerData from "./util/HandleServerData";
 import bus from "./components/common/bus";
 import 'element-ui/lib/theme-chalk/index.css'; // 默认主题
 // import '../static/css/theme-green/index.css';       // 浅绿色主题
@@ -16,10 +16,11 @@ import "babel-polyfill";
 
 window.bus = bus;
 Vue.use(ElementUI, {size: 'small'});
+Vue.use(HandleServerData);
 Vue.prototype.$axios = axios;
 Vue.prototype.$cookies = Cookies;
 Vue.prototype.$configData = ConfigData;
-Vue.prototype.$commonUtil = CommonUtil;
+
 
 const app = new Vue({
     router,
