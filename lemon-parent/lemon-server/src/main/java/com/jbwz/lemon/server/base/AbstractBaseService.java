@@ -1,5 +1,6 @@
 package com.jbwz.lemon.server.base;
 
+import com.jbwz.lemon.server.util.BeanUtil;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -11,11 +12,11 @@ public abstract class AbstractBaseService<T> implements BaseService<T> {
 
     @Override
     public T insert(T t) {
-        return (T) getDao().save(t);
+        return (T) getDao().save(BeanUtil.handleNullField(t));
     }
 
     public T updateById(T t) {
-        return (T) getDao().save(t);
+        return insert(t);
     }
 
     public void deleteById(T t) {
