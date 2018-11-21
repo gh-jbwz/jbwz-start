@@ -14,7 +14,7 @@ public class BeanUtilTest {
         user.setEmail("哈哈哈哈");
 
         User user22 = new User();
-        user22 = BeanUtil.setDefaultValueForNull(user);
+        user22 = BeanUtil.handleNullField(user);
 
         System.out.println(JSONObject.toJSON(user22));
     }

@@ -13,6 +13,8 @@ public class Resource {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer resourceId;
 
+    // 资源父id
+    private Integer pid;
     // 资源名称
     private String resourceName;
 
@@ -31,7 +33,7 @@ public class Resource {
 
     // 更新人
     private Integer updateBy;
-    // 类型
+    // 类型 0:菜单 1:其他
     private String type;
     // 图标
     private String icon;
@@ -127,5 +129,13 @@ public class Resource {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public Integer getPid() {
+        return pid;
+    }
+
+    public void setPid(Integer pid) {
+        this.pid = pid;
     }
 }
