@@ -3,7 +3,7 @@
         <div class="table">
             <div class="crumbs">
                 <el-breadcrumb separator="/">
-                    <el-breadcrumb-item><i class="el-icon-lx-favor"></i>员工列表</el-breadcrumb-item>
+                    <el-breadcrumb-item><i class="el-icon-lx-favor"></i>{{businessName}}列表</el-breadcrumb-item>
                 </el-breadcrumb>
             </div>
             <div class="container" style="border:0px">
@@ -116,7 +116,8 @@
 
 
         <!--添加弹出框 -->
-        <el-dialog :title="dialogTitle" @closed="dialogClosed" :visible.sync="formVisible" width="45%">
+        <el-dialog :title="dialogTitle" @closed="dialogClosed" :visible.sync="formVisible"
+                   width="45%">
             <el-form :rules="rules" ref="ruleForm" :model="ruleForm" size="medium"
                      label-width="100px">
                 <el-form-item label="id" hidden="hidden" prop="userId">
@@ -165,6 +166,7 @@
     export default {
         data() {
             return {
+                businessName: '用户',
                 formVisible: false,
                 dialogTitle: '',
                 isDetailShow: false,
@@ -209,17 +211,19 @@
                 this.getPageTable(this, currentPage, 'user/page', {"userName": this.search_word})
             },
             add: function () {
-                this.dialogTitle = "添加员工";
+                this.dialogTitle = "添加" + this.businessName;
                 this.formVisible = true;
             },
             edit: function (row) {
-                this.dialogTitle = "编辑员工";
+                this.resetRuleForm(this)
+                this.dialogTitle = "编辑" + this.businessName;
                 this.setRuleFormData(row);
                 this.formVisible = true;
             },
             detail: function (row) {
+                this.resetRuleForm(this)
                 this.isDetailShow = true;
-                this.dialogTitle = "员工详情";
+                this.dialogTitle = this.businessName + "详情";
                 this.setRuleFormData(row);
                 this.formVisible = true;
             },
@@ -238,9 +242,7 @@
                 this.deleteOneRow(this, '');
             },
             cancel: function (formName) {
-                this.isDetailShow = false;
                 this.formVisible = false;
-                this.$refs[formName].resetFields();
             },
             save: function (formName) {
                 this.commitRuleForm(this, formName, 'user/save')

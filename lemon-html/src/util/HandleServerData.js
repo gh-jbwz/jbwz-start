@@ -12,11 +12,14 @@ export default {
                 "total": total
             }
         }
+        Vue.prototype.resetRuleForm = function (vm) {
+            vm.$refs['ruleForm'].resetFields();
+        }
         Vue.prototype.deleteOneRow = function (vm, url) {
             vm.$message.success("几把娃子,这个功能等着你统一做来.");
         }
         Vue.prototype.closeDialogRuleForm = function (vm) {
-            vm.$refs['ruleForm'].resetFields();
+            this.resetRuleForm(vm);
             if (vm.isDetailShow) {
                 vm.isDetailShow = false;
             } else {

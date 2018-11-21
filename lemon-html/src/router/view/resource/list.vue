@@ -203,11 +203,13 @@
                 this.formVisible = true;
             },
             edit: function (row) {
+                this.resetRuleForm(this)
                 this.dialogTitle = "编辑" + this.businessName;
                 this.setRuleFormData(row);
                 this.formVisible = true;
             },
             detail: function (row) {
+                this.resetRuleForm(this)
                 this.isDetailShow = true;
                 this.dialogTitle = this.businessName + "详情";
                 this.setRuleFormData(row);
