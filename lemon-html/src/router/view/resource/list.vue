@@ -3,7 +3,8 @@
         <div class="table">
             <div class="crumbs">
                 <el-breadcrumb separator="/">
-                    <el-breadcrumb-item><i class="el-icon-lx-favor"></i>菜单管理</el-breadcrumb-item>
+                    <el-breadcrumb-item><i class="el-icon-lx-favor"></i>{{businessName}}管理
+                    </el-breadcrumb-item>
                 </el-breadcrumb>
             </div>
             <div class="container" style="border:0px">
@@ -17,7 +18,6 @@
                           element-loading-background="rgba(0, 0, 0, 0.8)" :data="tableData" highlight-current-row border
                           style="width: 100%">
                     <el-table-column
-                        hidden="hidden"
                         prop="resourceId"
                         label="资源id"
                         header-align="center"
@@ -105,8 +105,20 @@
                     <el-input v-model="ruleForm.resourceName"></el-input>
                 </el-form-item>
                 <el-form-item label="类型" prop="type">
-                    <el-radio v-model="ruleForm.type" label="0">菜单</el-radio>
-                    <el-radio v-model="ruleForm.type" label="1">资源</el-radio>
+                    <el-radio-group v-model="ruleForm.type">
+                        <el-radio label="0">菜单</el-radio>
+                        <el-radio label="1">资源</el-radio>
+                    </el-radio-group>
+                </el-form-item>
+                <el-form-item v-if="ruleForm.type=='0'" label="父菜单" prop="pid">
+                    <el-select v-model="ruleForm.pid" filterable placeholder="请选择">
+                        <el-option
+                            v-for="item in menuOptions"
+                            :key="item.resourceId"
+                            :label="item.resourceName"
+                            :value="item.resourceId">
+                        </el-option>
+                    </el-select>
                 </el-form-item>
                 <el-form-item label="访问URL" prop="resourceUrl">
                     <el-input v-model="ruleForm.resourceUrl"></el-input>
@@ -131,10 +143,13 @@
     export default {
         data() {
             return {
+                businessName: '资源',
+                menuOptions: [],
                 formVisible: false,
                 dialogTitle: '',
                 isDetailShow: false,
                 ruleForm: {
+                    pid: '',
                     resourceId: '',
                     resourceName: '',
                     resourceUrl: '',
@@ -152,33 +167,54 @@
                     ],
                     type: [
                         {required: true, message: '请选择类型', trigger: 'blur'},
+                    ],
+                    pid: [
+                        {required: true, message: '请选择父菜单', trigger: 'blur'},
                     ]
                 }
             }
         },
         created() {
+            this.getMenuList();
             this.list()
         },
+        // watch: {
+        //     'ruleForm.type': function (nv, ov) {
+        //         if (nv != '0') {
+        //             this.ruleForm.pid = 0;
+        //         } else {
+        //             this.ruleForm.pid = '';
+        //         }
+        //     }
+        // },
         methods: {
             list: function (pageNumber) {
                 this.getPageTable(this, pageNumber, 'resource/page', {"resourceName": this.search_word})
             },
+            getMenuList: function () {
+                let vm = this;
+                this.menuOptions = [{'resourceId': 0, 'resourceName': '根菜单'}];
+                this.$axios.get('resource/menu-list').then(function (res) {
+                    vm.menuOptions = vm.menuOptions.concat(res.data.data);
+                })
+            },
             add: function () {
-                this.dialogTitle = "添加资源";
+                this.dialogTitle = "添加" + this.businessName;
                 this.formVisible = true;
             },
             edit: function (row) {
-                this.dialogTitle = "编辑资源";
+                this.dialogTitle = "编辑" + this.businessName;
                 this.setRuleFormData(row);
                 this.formVisible = true;
             },
             detail: function (row) {
                 this.isDetailShow = true;
-                this.dialogTitle = "员工详情";
+                this.dialogTitle = this.businessName + "详情";
                 this.setRuleFormData(row);
                 this.formVisible = true;
             },
             setRuleFormData: function (row) {
+                this.ruleForm.pid = row.pid;
                 this.ruleForm.resourceId = row.resourceId;
                 this.ruleForm.resourceName = row.resourceName;
                 this.ruleForm.icon = row.icon;
@@ -187,12 +223,15 @@
                 this.ruleForm.type = row.type;
             },
             deleted: function (row) {
-                this.deleteOneRow(this,'');
+                this.deleteOneRow(this, '');
             },
             cancel: function () {
                 this.formVisible = false;
             },
             save: function (formName) {
+                if (this.ruleForm.type === '1') {
+                    this.ruleForm.pid = 0;
+                }
                 this.commitRuleForm(this, formName, 'resource/save')
             },
             dialogClosed: function () {
