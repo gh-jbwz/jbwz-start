@@ -5,13 +5,16 @@
                 <router-link :to="item.path" class="tags-li-title">
                     {{item.title}}
                 </router-link>
-                <span class="tags-li-icon" @click="closeTags(index)"><i class="el-icon-close"></i></span>
+                <span class="tags-li-icon" @click="closeTags(index)">
+                    <i class="el-icon-close"></i>
+                </span>
             </li>
         </ul>
         <div class="tags-close-box">
             <el-dropdown @command="handleTags">
                 <el-button size="mini" type="primary">
-                    标签选项<i class="el-icon-arrow-down el-icon--right"></i>
+                    标签选项
+                    <i class="el-icon-arrow-down el-icon--right"></i>
                 </el-button>
                 <el-dropdown-menu size="small" slot="dropdown">
                     <el-dropdown-item command="other">关闭其他</el-dropdown-item>
@@ -23,7 +26,6 @@
 </template>
 
 <script>
-    import bus from '../../components/common/bus';
     export default {
         data() {
             return {
@@ -40,29 +42,29 @@
                 const item = this.tagsList[index] ? this.tagsList[index] : this.tagsList[index - 1];
                 if (item) {
                     delItem.path === this.$route.fullPath && this.$router.push(item.path);
-                }else{
-                    this.$router.push('/');
+                } else {
+                    this.$router.push('/dashboard');
                 }
             },
             // 关闭全部标签
-            closeAll(){
+            closeAll() {
                 this.tagsList = [];
-                this.$router.push('/');
+                this.$router.push('/dashboard');
             },
             // 关闭其他标签
-            closeOther(){
+            closeOther() {
                 const curItem = this.tagsList.filter(item => {
                     return item.path === this.$route.fullPath;
                 })
                 this.tagsList = curItem;
             },
             // 设置标签
-            setTags(route){
+            setTags(route) {
                 const isExist = this.tagsList.some(item => {
                     return item.path === route.fullPath;
                 })
-                if(!isExist){
-                    if(this.tagsList.length >= 8){
+                if (!isExist) {
+                    if (this.tagsList.length >= 8) {
                         this.tagsList.shift();
                     }
                     this.tagsList.push({
@@ -73,7 +75,7 @@
                 }
                 bus.$emit('tags', this.tagsList);
             },
-            handleTags(command){
+            handleTags(command) {
                 command === 'other' ? this.closeOther() : this.closeAll();
             }
         },
@@ -82,12 +84,12 @@
                 return this.tagsList.length > 0;
             }
         },
-        watch:{
-            $route(newValue, oldValue){
+        watch: {
+            $route(newValue, oldValue) {
                 this.setTags(newValue);
             }
         },
-        created(){
+        created() {
             this.setTags(this.$route);
         }
     }

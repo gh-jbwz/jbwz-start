@@ -56,7 +56,7 @@ export default {
                         .then(function (res) {
                             //保存完成，重置所有输入框
                             if (callBack) {
-                                callBack();
+                                callBack(vm);
                             }
                             vm.list(0);
                         })

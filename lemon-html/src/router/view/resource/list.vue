@@ -205,7 +205,8 @@
             this.getMenuList();
             this.list()
             this.getAllRouters();
-        },
+        }
+        ,
         // watch: {
         //     'ruleFormData.type': function (nv, ov) {
         //         if (nv != '0') {
@@ -260,15 +261,27 @@
                 if (this.ruleFormData.type === '1') {
                     this.ruleFormData.pid = 0;
                 }
-                this.commitRuleForm(this, formName, 'resource/save', this.getMenuList)
+                this.commitRuleForm(this, formName, 'resource/save', this.afterSave)
+            },
+            afterSave: function (vm) {
+                //新增菜单后,通知左侧菜单栏跟新菜单
+                bus.$emit(vm.$configData.busMenuName, "true");
+                // 获取最新的菜单下拉框
+                vm.getMenuList()
             },
             dialogClosed: function () {
                 this.closeDialogRuleForm(this);
             },
             getAllRouters: function () {
+                let tmp = [{path: "", meta: {title: "请选择"}}];
                 for (let i = 0; i < routers.length; i++) {
                     if (routers[i].children) {
-                        this.allRouters = routers[i].children;
+                        // let routerTemps = this.allRouters.concat(tmp).concat(routers[i].children);
+                        // this.allRouters = routers[i].children;
+                        let all = tmp.concat(routers[i].children);
+                        // 一定要先把上面的拼接完再赋值给主变量(allRouters),不然得到的不是数组对象而是字符串
+                        this.allRouters = all;
+                        // console.log("所有routers", all);
                         return this.allRouters;
                     }
                 }
