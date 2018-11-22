@@ -11,3 +11,7 @@
     width: 300px;
     display: inline-block;
 }
+
+.el-table__body td .cell {
+    height: 25px;
+}

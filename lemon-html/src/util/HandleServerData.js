@@ -23,6 +23,7 @@ export default {
         }
         Vue.prototype.closeDialogRuleForm = function (vm) {
             this.resetRuleForm(vm);
+            vm.$refs['ruleForm'].clearValidate();
             if (vm.isDetailShow) {
                 vm.isDetailShow = false;
             } else {

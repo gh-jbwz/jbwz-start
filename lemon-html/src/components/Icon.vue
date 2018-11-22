@@ -6,32 +6,15 @@
             </el-breadcrumb>
         </div>
         <div class="container">
-            <h2>使用方法</h2>
-            <p style="line-height: 50px;">
-                直接通过设置类名为 el-icon-lx-iconName 来使用即可。例如：（共{{iconList.length}}个图标）
-            </p>
-            <p class="example-p">
-                <i class="el-icon-lx-redpacket_fill" style="font-size: 30px;color: #ff5900"></i>
-                <span>&lt;i class=&quot;el-icon-lx-redpacket_fill&quot;&gt;&lt;/i&gt;</span>
-            </p>
-            <p class="example-p">
-                <i class="el-icon-lx-weibo" style="font-size: 30px;color:#fd5656"></i>
-                <span>&lt;i class=&quot;el-icon-lx-weibo&quot;&gt;&lt;/i&gt;</span>
-            </p>
-            <p class="example-p">
-                <i class="el-icon-lx-emojifill" style="font-size: 30px;color: #ffc300"></i>
-                <span>&lt;i class=&quot;el-icon-lx-emojifill&quot;&gt;&lt;/i&gt;</span>
-            </p>
-            <br>
-            <h2>图标</h2>
+            <h3 align="center"> 选择图标</h3>
             <div class="search-box">
                 <el-input class="search" size="large" v-model="keyword" clearable placeholder="请输入图标名称"></el-input>
             </div>
-            <ul>
+            <ul class="icon-list">
                 <li class="icon-li" v-for="(item,index) in list" :key="index">
-                    <div class="icon-li-content">
+                    <div class="icon-li-content" @dblclick="selectIcon(`${item}`)">
                         <i :class="`el-icon-lx-${item}`"></i>
-                        <span>{{item}}</span>
+                        <span class="icon-name">{{item}}</span>
                     </div>
                 </li>
             </ul>
@@ -42,7 +25,7 @@
 
 <script>
     export default {
-        data: function(){
+        data: function () {
             return {
                 keyword: '',
                 iconList: [
@@ -174,8 +157,14 @@
                 ]
             }
         },
+        methods: {
+            selectIcon: function (icon) {
+                let iconName = "el-icon-lx-" + icon;
+                this.$emit("selected", iconName)
+            }
+        },
         computed: {
-            list(){
+            list() {
                 return this.iconList.filter((item) => {
                     return item.indexOf(this.keyword) !== -1;
                 })
@@ -185,41 +174,61 @@
 </script>
 
 <style scoped>
-.example-p{
-    height: 45px;
-    display: flex;
-    align-items: center;
-}
-.search-box{
-    text-align: center;
-    margin-top: 10px;
-}
-.search{
-    width: 300px;
-}
-ul,li{
-    list-style: none;
-}
-.icon-li{
-    display: inline-block;
-    padding: 10px;
-    width: 120px;
-    height: 120px;
-}
-.icon-li-content{
-    display: flex;
-    height: 100%;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-}
-.icon-li-content i{
-    font-size: 36px;
-    color: #606266;
-}
-.icon-li-content span{
-    margin-top: 10px;
-    color: #787878;
-}
+    .search-box {
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    .search {
+        width: 300px;
+        margin-bottom: 7px;
+    }
+
+    .icon-list {
+        overflow: hidden;
+        list-style: none;
+        padding: 0px;
+        border: 1px solid #eaeefb;
+    }
+
+    .icon-name {
+        margin-top: 10px;
+        display: inline-block;
+        padding: 0 3px;
+        height: 1em;
+        color: #787878;
+        vertical-align: middle;
+    }
+
+    ul, li {
+        list-style: none;
+    }
+
+    .icon-li {
+        float: left;
+        width: 16.66%;
+        text-align: center;
+        height: 120px;
+        display: list-item;
+        border-right: 1px solid #eee;
+        border-bottom: 1px solid #eee;
+        margin-right: -1px;
+        margin-right: -1px;
+    }
+
+    .icon-li-content {
+        display: flex;
+        height: 100%;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+    }
+
+    .icon-li-content i {
+        font-size: 26px;
+        color: #606266;
+    }
+
+
 </style>

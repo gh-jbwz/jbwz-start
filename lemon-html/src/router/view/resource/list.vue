@@ -80,8 +80,10 @@
                         align="center"
                     >
                         <template slot-scope="scope">
-                            <el-button @click="detail(scope.row)" type="text" size="small">查看</el-button>
-                            <el-button @click="edit(scope.row)" type="text" size="small">编辑</el-button>
+                            <el-button @click="detail(scope.row)" type="text" icon="el-icon-tickets" size="small">查看
+                            </el-button>
+                            <el-button @click="edit(scope.row)" type="text" icon="el-icon-edit" size="small">编辑
+                            </el-button>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -120,14 +122,25 @@
                         </el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="访问URL" prop="resourceUrl">
+                <el-form-item label="资源URL" prop="resourceUrl">
                     <el-input v-model="ruleFormData.resourceUrl"></el-input>
                 </el-form-item>
                 <el-form-item label="界面路由" prop="router">
-                    <el-input v-model="ruleFormData.router"></el-input>
+                    <el-select v-model="ruleFormData.router" filterable placeholder="请选择">
+                        <el-option
+                            v-for="item in allRouters"
+                            :key="item.path"
+                            :label="item.meta.title"
+                            :value="item.path">
+                        </el-option>
+                    </el-select>
+
                 </el-form-item>
-                <el-form-item label="图标" prop="icon">
-                    <el-input v-model="ruleFormData.icon"></el-input>
+                <el-form-item v-if="ruleFormData.type=='0'" label="图标" prop="icon">
+                    <span> <i :class="ruleFormData.icon"></i></span>
+                    <el-button style="margin-left:15px" size="small" v-if="!isDetailShow"
+                               @click="iconDialogVisible=true">选择图标
+                    </el-button>
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
@@ -135,17 +148,31 @@
                 <el-button type="primary" v-if="!isDetailShow" @click="save('ruleForm')">保 存</el-button>
             </span>
         </el-dialog>
+        <!--Icon弹框 -->
+        <el-dialog title="选择图标" :visible.sync="iconDialogVisible" width="65%">
+            <icon @selected="selectIcon"></icon>
+            <!--<span slot="footer" class="dialog-footer">-->
+            <!--<el-button type="primary" v-if="!isDetailShow" @click="iconDialogVisible=false">确定</el-button>-->
+            <!--</span>-->
+        </el-dialog>
     </div>
 </template>
 
 <script>
+    import Icon from '@/components/Icon';
+    import routers from '@/router/routers.js';
 
     export default {
+        components: {
+            Icon
+        },
         data() {
             return {
                 businessName: '资源',
                 menuOptions: [],
+                allRouters: [],
                 formVisible: false,
+                iconDialogVisible: false,
                 dialogTitle: '',
                 isDetailShow: false,
                 ruleFormData: {
@@ -177,6 +204,7 @@
         created() {
             this.getMenuList();
             this.list()
+            this.getAllRouters();
         },
         // watch: {
         //     'ruleFormData.type': function (nv, ov) {
@@ -236,10 +264,25 @@
             },
             dialogClosed: function () {
                 this.closeDialogRuleForm(this);
+            },
+            getAllRouters: function () {
+                for (let i = 0; i < routers.length; i++) {
+                    if (routers[i].children) {
+                        this.allRouters = routers[i].children;
+                        return this.allRouters;
+                    }
+                }
+            },
+            selectIcon: function (iconName) {
+                this.ruleFormData.icon = iconName;
+                this.iconDialogVisible = false;
             }
         }
     }
 </script>
 
 <style scoped>
+    .container i, form i {
+        font-size: 20px;
+    }
 </style>

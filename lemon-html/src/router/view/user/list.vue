@@ -97,12 +97,16 @@
                         label="操作"
                         header-align="center"
                         align="center"
-                        width="150px"
+                        width="250px"
                     >
                         <template slot-scope="scope">
-                            <el-button @click="detail(scope.row)" type="text" size="small">查看</el-button>
-                            <el-button @click="edit(scope.row)" type="text" size="small">编辑</el-button>
-                            <el-button @click="deleted(scope.row)" type="text" size="small">删除</el-button>
+                            <el-button @click="detail(scope.row)" type="text" icon="el-icon-tickets" size="small">查看
+                            </el-button>
+                            <el-button @click="edit(scope.row)" type="text" icon="el-icon-edit" size="small">编辑
+                            </el-button>
+                            <el-button @click="deleted(scope.row)" type="text" icon="el-icon-delete" class="red"
+                                       size="small">删除
+                            </el-button>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -253,4 +257,7 @@
 </script>
 
 <style scoped>
+    .red {
+        color: #ff0000;
+    }
 </style>
