@@ -96,22 +96,22 @@
 
         <!--添加弹出框 -->
         <el-dialog :title="dialogTitle" @closed="dialogClosed" :visible.sync="formVisible" width="45%">
-            <el-form :rules="rules" ref="ruleForm" :model="ruleForm" size="medium"
+            <el-form :rules="rules" ref="ruleForm" :model="ruleFormData" size="medium"
                      label-width="100px">
                 <el-form-item label="id" hidden="hidden" prop="resourceId">
-                    <el-input type="hidden" v-model="ruleForm.resourceId"></el-input>
+                    <el-input type="hidden" v-model="ruleFormData.resourceId"></el-input>
                 </el-form-item>
                 <el-form-item label="资源名称" prop="resourceName">
-                    <el-input v-model="ruleForm.resourceName"></el-input>
+                    <el-input v-model="ruleFormData.resourceName"></el-input>
                 </el-form-item>
                 <el-form-item label="类型" prop="type">
-                    <el-radio-group v-model="ruleForm.type">
+                    <el-radio-group v-model="ruleFormData.type">
                         <el-radio label="0">菜单</el-radio>
                         <el-radio label="1">资源</el-radio>
                     </el-radio-group>
                 </el-form-item>
-                <el-form-item v-if="ruleForm.type=='0'" label="父菜单" prop="pid">
-                    <el-select v-model="ruleForm.pid" filterable placeholder="请选择">
+                <el-form-item v-if="ruleFormData.type=='0'" label="父菜单" prop="pid">
+                    <el-select v-model="ruleFormData.pid" filterable placeholder="请选择">
                         <el-option
                             v-for="item in menuOptions"
                             :key="item.resourceId"
@@ -121,13 +121,13 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item label="访问URL" prop="resourceUrl">
-                    <el-input v-model="ruleForm.resourceUrl"></el-input>
+                    <el-input v-model="ruleFormData.resourceUrl"></el-input>
                 </el-form-item>
                 <el-form-item label="界面路由" prop="router">
-                    <el-input v-model="ruleForm.router"></el-input>
+                    <el-input v-model="ruleFormData.router"></el-input>
                 </el-form-item>
                 <el-form-item label="图标" prop="icon">
-                    <el-input v-model="ruleForm.icon"></el-input>
+                    <el-input v-model="ruleFormData.icon"></el-input>
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
@@ -148,7 +148,7 @@
                 formVisible: false,
                 dialogTitle: '',
                 isDetailShow: false,
-                ruleForm: {
+                ruleFormData: {
                     pid: '',
                     resourceId: '',
                     resourceName: '',
@@ -179,11 +179,11 @@
             this.list()
         },
         // watch: {
-        //     'ruleForm.type': function (nv, ov) {
+        //     'ruleFormData.type': function (nv, ov) {
         //         if (nv != '0') {
-        //             this.ruleForm.pid = 0;
+        //             this.ruleFormData.pid = 0;
         //         } else {
-        //             this.ruleForm.pid = '';
+        //             this.ruleFormData.pid = '';
         //         }
         //     }
         // },
@@ -203,26 +203,24 @@
                 this.formVisible = true;
             },
             edit: function (row) {
-                this.resetRuleForm(this)
                 this.dialogTitle = "编辑" + this.businessName;
                 this.setRuleFormData(row);
                 this.formVisible = true;
             },
             detail: function (row) {
-                this.resetRuleForm(this)
-                this.isDetailShow = true;
                 this.dialogTitle = this.businessName + "详情";
+                this.isDetailShow = true;
                 this.setRuleFormData(row);
                 this.formVisible = true;
             },
             setRuleFormData: function (row) {
-                this.ruleForm.pid = row.pid;
-                this.ruleForm.resourceId = row.resourceId;
-                this.ruleForm.resourceName = row.resourceName;
-                this.ruleForm.icon = row.icon;
-                this.ruleForm.resourceUrl = row.resourceUrl;
-                this.ruleForm.router = row.router;
-                this.ruleForm.type = row.type;
+                this.ruleFormData.pid = row.pid;
+                this.ruleFormData.resourceId = row.resourceId;
+                this.ruleFormData.resourceName = row.resourceName;
+                this.ruleFormData.icon = row.icon;
+                this.ruleFormData.resourceUrl = row.resourceUrl;
+                this.ruleFormData.router = row.router;
+                this.ruleFormData.type = row.type;
             },
             deleted: function (row) {
                 this.deleteOneRow(this, '');
@@ -231,10 +229,10 @@
                 this.formVisible = false;
             },
             save: function (formName) {
-                if (this.ruleForm.type === '1') {
-                    this.ruleForm.pid = 0;
+                if (this.ruleFormData.type === '1') {
+                    this.ruleFormData.pid = 0;
                 }
-                this.commitRuleForm(this, formName, 'resource/save')
+                this.commitRuleForm(this, formName, 'resource/save', this.getMenuList)
             },
             dialogClosed: function () {
                 this.closeDialogRuleForm(this);

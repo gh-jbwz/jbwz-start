@@ -2,14 +2,14 @@
     <div class="login-wrap">
         <div class="ms-login">
             <div class="ms-title">几把娃子们-真球懒</div>
-            <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="0px" class="ms-content">
+            <el-form :model="ruleFormData" :rules="rules" ref="ruleForm" label-width="0px" class="ms-content">
                 <el-form-item prop="username">
-                    <el-input v-model="ruleForm.username" placeholder="username">
+                    <el-input v-model="ruleFormData.username" placeholder="username">
                         <el-button slot="prepend" icon="el-icon-lx-people"></el-button>
                     </el-input>
                 </el-form-item>
                 <el-form-item prop="password">
-                    <el-input type="password" placeholder="password" v-model="ruleForm.password"
+                    <el-input type="password" placeholder="password" v-model="ruleFormData.password"
                               @keyup.enter.native="submitForm('ruleForm')">
                         <el-button slot="prepend" icon="el-icon-lx-lock"></el-button>
                     </el-input>
@@ -28,7 +28,7 @@
     export default {
         data: function () {
             return {
-                ruleForm: {
+                ruleFormData: {
                     username: 'yyh',
                     password: ''
                 },
@@ -51,8 +51,8 @@
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
                         this.$axios.post("login", {
-                            "username": this.ruleForm.username,
-                            "password": this.ruleForm.password
+                            "username": this.ruleFormData.username,
+                            "password": this.ruleFormData.password
                         }).then((res) => {
                             let data = res.data;
                             if (data.code == 2001) {

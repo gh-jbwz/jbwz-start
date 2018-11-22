@@ -118,37 +118,37 @@
         <!--添加弹出框 -->
         <el-dialog :title="dialogTitle" @closed="dialogClosed" :visible.sync="formVisible"
                    width="45%">
-            <el-form :rules="rules" ref="ruleForm" :model="ruleForm" size="medium"
+            <el-form :rules="rules" ref="ruleForm" :model="ruleFormData" size="medium"
                      label-width="100px">
                 <el-form-item label="id" hidden="hidden" prop="userId">
-                    <el-input type="hidden" v-model="ruleForm.userId"></el-input>
+                    <el-input type="hidden" v-model="ruleFormData.userId"></el-input>
                 </el-form-item>
                 <el-form-item label="工号" prop="userNo">
-                    <el-input v-model="ruleForm.userNo"></el-input>
+                    <el-input v-model="ruleFormData.userNo"></el-input>
                 </el-form-item>
                 <el-form-item label="姓名" prop="userName">
-                    <el-input v-model="ruleForm.userName"></el-input>
+                    <el-input v-model="ruleFormData.userName"></el-input>
                 </el-form-item>
                 <el-form-item label="昵称" prop="nickName">
-                    <el-input v-model="ruleForm.nickName"></el-input>
+                    <el-input v-model="ruleFormData.nickName"></el-input>
                 </el-form-item>
                 <el-form-item label="性别" prop="gender">
-                    <el-radio v-model="ruleForm.gender" label="1">男</el-radio>
-                    <el-radio v-model="ruleForm.gender" label="0">女</el-radio>
+                    <el-radio v-model="ruleFormData.gender" label="1">男</el-radio>
+                    <el-radio v-model="ruleFormData.gender" label="0">女</el-radio>
                 </el-form-item>
                 <el-form-item label="入职时间" prop="entryDate">
-                    <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.entryDate"
+                    <el-date-picker type="date" placeholder="选择日期" v-model="ruleFormData.entryDate"
                                     value-format="yyyy-MM-dd"
                                     style="width: 100%;"></el-date-picker>
                 </el-form-item>
                 <el-form-item label="手机号" prop="mobile">
-                    <el-input v-model="ruleForm.mobile"></el-input>
+                    <el-input v-model="ruleFormData.mobile"></el-input>
                 </el-form-item>
                 <el-form-item label="邮箱" prop="email">
-                    <el-input v-model="ruleForm.email"></el-input>
+                    <el-input v-model="ruleFormData.email"></el-input>
                 </el-form-item>
                 <el-form-item label="生日" prop="birthday">
-                    <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.birthday"
+                    <el-date-picker type="date" placeholder="选择日期" v-model="ruleFormData.birthday"
                                     value-format="yyyy-MM-dd"
                                     style="width: 100%;"></el-date-picker>
                 </el-form-item>
@@ -170,7 +170,7 @@
                 formVisible: false,
                 dialogTitle: '',
                 isDetailShow: false,
-                ruleForm: {
+                ruleFormData: {
                     userId: '',
                     userNo: '',
                     userName: '',
@@ -215,28 +215,26 @@
                 this.formVisible = true;
             },
             edit: function (row) {
-                this.resetRuleForm(this)
                 this.dialogTitle = "编辑" + this.businessName;
                 this.setRuleFormData(row);
                 this.formVisible = true;
             },
             detail: function (row) {
-                this.resetRuleForm(this)
                 this.isDetailShow = true;
                 this.dialogTitle = this.businessName + "详情";
                 this.setRuleFormData(row);
                 this.formVisible = true;
             },
             setRuleFormData: function (row) {
-                this.ruleForm.userId = row.userId;
-                this.ruleForm.userName = row.userName;
-                this.ruleForm.userNo = row.userNo;
-                this.ruleForm.nickName = row.nickName;
-                this.ruleForm.mobile = row.mobile;
-                this.ruleForm.gender = row.gender;
-                this.ruleForm.email = row.email;
-                this.ruleForm.birthday = row.birthday;
-                this.ruleForm.entryDate = row.entryDate;
+                this.ruleFormData.userId = row.userId;
+                this.ruleFormData.userName = row.userName;
+                this.ruleFormData.userNo = row.userNo;
+                this.ruleFormData.nickName = row.nickName;
+                this.ruleFormData.mobile = row.mobile;
+                this.ruleFormData.gender = row.gender;
+                this.ruleFormData.email = row.email;
+                this.ruleFormData.birthday = row.birthday;
+                this.ruleFormData.entryDate = row.entryDate;
             },
             deleted: function (row) {
                 this.deleteOneRow(this, '');

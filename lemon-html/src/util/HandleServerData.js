@@ -13,7 +13,10 @@ export default {
             }
         }
         Vue.prototype.resetRuleForm = function (vm) {
-            vm.$refs['ruleForm'].resetFields();
+            for (let item in vm.ruleFormData) {
+                vm.ruleFormData[item] = '';
+            }
+            // vm.$refs['ruleForm'].resetFields();
         }
         Vue.prototype.deleteOneRow = function (vm, url) {
             vm.$message.success("几把娃子,这个功能等着你统一做来.");
@@ -45,13 +48,15 @@ export default {
                 vm.fillTableData(vm, res);
             })
         }
-        Vue.prototype.commitRuleForm = function (vm, formName, url) {
+        Vue.prototype.commitRuleForm = function (vm, formName, url, callBack) {
             vm.$refs[formName].validate((valid) => {
                 if (valid) {
-                    vm.$axios.post(url, vm.ruleForm)
+                    vm.$axios.post(url, vm.ruleFormData)
                         .then(function (res) {
                             //保存完成，重置所有输入框
-                            vm.$refs[formName].resetFields();
+                            if (callBack) {
+                                callBack();
+                            }
                             vm.list(0);
                         })
                     vm.formVisible = false;
