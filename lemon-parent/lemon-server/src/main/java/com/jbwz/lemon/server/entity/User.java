@@ -56,7 +56,7 @@ public class User {
 
     // 创建人
     @JSONField(serialize = false)
-    private String createBy;
+    private Integer createBy;
 
     // 创建时间
     @JSONField(format = "yyyy-MM-dd HH:mm:ss")
@@ -64,7 +64,7 @@ public class User {
 
     // 更新人
     @JSONField(serialize = false)
-    private String updateBy;
+    private Integer updateBy;
 
     // 更新时间
     @JSONField(serialize = false)
@@ -174,13 +174,6 @@ public class User {
         this.status = status;
     }
 
-    public String getCreateBy() {
-        return createBy;
-    }
-
-    public void setCreateBy(String createBy) {
-        this.createBy = createBy;
-    }
 
     public Date getCreateTime() {
         return createTime;
@@ -190,11 +183,19 @@ public class User {
         this.createTime = createTime;
     }
 
-    public String getUpdateBy() {
+    public Integer getCreateBy() {
+        return createBy;
+    }
+
+    public void setCreateBy(Integer createBy) {
+        this.createBy = createBy;
+    }
+
+    public Integer getUpdateBy() {
         return updateBy;
     }
 
-    public void setUpdateBy(String updateBy) {
+    public void setUpdateBy(Integer updateBy) {
         this.updateBy = updateBy;
     }
 
