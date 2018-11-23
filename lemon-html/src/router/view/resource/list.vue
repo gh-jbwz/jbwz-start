@@ -10,7 +10,7 @@
             <div class="container" style="border:0px">
                 <div class="content-head-box">
                     <el-button v-if="hasPermission('resource/save')" type="primary" icon="add" class="head-left"
-                               @click="add">添加
+                               @click="handleButtonAction('add')">添加
                     </el-button>
                     <el-input v-model="search_word" placeholder="名称" class="search-input">
                     </el-input>
@@ -82,9 +82,11 @@
                         align="center"
                     >
                         <template slot-scope="scope">
-                            <el-button @click="detail(scope.row)" type="text" icon="el-icon-tickets" size="small">查看
+                            <el-button @click="handleButtonAction('detail',scope.row)" type="text"
+                                       icon="el-icon-tickets" size="small">查看
                             </el-button>
-                            <el-button v-if="hasPermission('resource/update')" @click="edit(scope.row)" type="text"
+                            <el-button v-if="hasPermission('resource/update')"
+                                       @click="handleButtonAction('edit',scope.row)" type="text"
                                        icon="el-icon-edit" size="small">编辑
                             </el-button>
                         </template>
@@ -100,7 +102,7 @@
 
 
         <!--添加弹出框 -->
-        <el-dialog :title="dialogTitle" @closed="dialogClosed" :visible.sync="formVisible" width="45%">
+        <el-dialog :title="dialogFormTitle" @closed="dialogClosed" :visible.sync="dialogFormVisible" width="45%">
             <el-form :rules="rules" ref="ruleForm" :model="ruleFormData" size="medium"
                      label-width="100px">
                 <el-form-item label="id" hidden="hidden" prop="resourceId">
@@ -115,6 +117,7 @@
                         <el-radio label="1">资源</el-radio>
                     </el-radio-group>
                 </el-form-item>
+                <!--如果是菜单再选择父菜单-->
                 <el-form-item v-if="ruleFormData.type=='0'" label="父菜单" prop="pid">
                     <el-select v-model="ruleFormData.pid" filterable placeholder="请选择">
                         <el-option
@@ -139,23 +142,24 @@
                     </el-select>
 
                 </el-form-item>
+                <!--如果是菜单再选择图标-->
                 <el-form-item v-if="ruleFormData.type=='0'" label="图标" prop="icon">
                     <span> <i :class="ruleFormData.icon"></i></span>
-                    <el-button style="margin-left:15px" size="small" v-if="!isDetailShow"
+                    <el-button style="margin-left:15px" size="small" v-if="!isDetailButton"
                                @click="iconDialogVisible=true">选择图标
                     </el-button>
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
-                <el-button @click="cancel('ruleForm')">取 消</el-button>
-                <el-button type="primary" v-if="!isDetailShow" @click="save('ruleForm')">保 存</el-button>
+                <el-button v-if="!isDetailButton" @click="dialogFormVisible=false">取 消</el-button>
+                <el-button v-if="!isDetailButton" type="primary" @click="save">保 存</el-button>
             </span>
         </el-dialog>
         <!--Icon弹框 -->
         <el-dialog title="选择图标" :visible.sync="iconDialogVisible" width="65%">
             <icon @selected="selectIcon"></icon>
             <!--<span slot="footer" class="dialog-footer">-->
-            <!--<el-button type="primary" v-if="!isDetailShow" @click="iconDialogVisible=false">确定</el-button>-->
+            <!--<el-button type="primary" v-if="!isDetailButton" @click="iconDialogVisible=false">确定</el-button>-->
             <!--</span>-->
         </el-dialog>
     </div>
@@ -171,14 +175,20 @@
         },
         data() {
             return {
-                businessName: '资源',
-                menuOptions: [],
-                allRouters: [],
-                formVisible: false,
-                iconDialogVisible: false,
-                dialogTitle: '',
-                isDetailShow: false,
-                ruleFormData: {
+                /* =====  start  =====  以下变量名称在每个vue文件中都必须保持不变 */
+                dialogFormVisible: false,
+                dialogFormTitle: '',
+                isDetailButton: false,
+                isAddButton: false,
+                isEditButton: false,
+                search_word: '',
+                loading: false,
+                tableData: [],
+                total: 0,
+                //另外ruleFormData,rules两个变量的名字也必须保持不变,内容需要跟据业务字段改变
+                /*======  end  ========*/
+                businessName: '资源',//功能名称
+                ruleFormData: {//表单字段
                     pid: '',
                     resourceId: '',
                     resourceName: '',
@@ -187,11 +197,7 @@
                     icon: '',
                     type: ''
                 },
-                search_word: '',
-                loading: false,
-                tableData: [],
-                total: 0,
-                rules: {
+                rules: {//表单校验
                     resourceName: [
                         {required: true, message: '请输入资源名称', trigger: 'blur'}
                     ],
@@ -201,7 +207,12 @@
                     pid: [
                         {required: true, message: '请选择父菜单', trigger: 'blur'},
                     ]
-                }
+                },
+                /*=========== 以下为本vue自定义字段 ===========*/
+
+                menuOptions: [],
+                allRouters: [],
+                iconDialogVisible: false,
             }
         },
         created() {
@@ -210,16 +221,26 @@
             this.getAllRouters();
         }
         ,
-        // watch: {
-        //     'ruleFormData.type': function (nv, ov) {
-        //         if (nv != '0') {
-        //             this.ruleFormData.pid = 0;
-        //         } else {
-        //             this.ruleFormData.pid = '';
-        //         }
-        //     }
-        // },
         methods: {
+            dialogClosed: function () {
+                this.closeDialogRuleForm(this);
+            },
+            //action=add|edit|detail
+            handleButtonAction: function (action, row) {
+                this.$handleButtonAction(this, action, row);
+            },
+            save: function () {
+                let url = 'error';
+                if (this.isAddButton) {
+                    url = 'resource/save';
+                } else if (this.isEditButton) {
+                    url = 'resource/update';
+                }
+                if (this.ruleFormData.type === '1') {
+                    this.ruleFormData.pid = 0;
+                }
+                this.commitRuleForm(this, url, this.afterSave)
+            },
             list: function (pageNumber) {
                 this.getPageTable(this, pageNumber, 'resource/page', {"resourceName": this.search_word})
             },
@@ -230,21 +251,6 @@
                     vm.menuOptions = vm.menuOptions.concat(res.data.data);
                 })
             },
-            add: function () {
-                this.dialogTitle = "添加" + this.businessName;
-                this.formVisible = true;
-            },
-            edit: function (row) {
-                this.dialogTitle = "编辑" + this.businessName;
-                this.setRuleFormData(row);
-                this.formVisible = true;
-            },
-            detail: function (row) {
-                this.dialogTitle = this.businessName + "详情";
-                this.isDetailShow = true;
-                this.setRuleFormData(row);
-                this.formVisible = true;
-            },
             setRuleFormData: function (row) {
                 this.ruleFormData.pid = row.pid;
                 this.ruleFormData.resourceId = row.resourceId;
@@ -254,26 +260,11 @@
                 this.ruleFormData.router = row.router;
                 this.ruleFormData.type = row.type;
             },
-            deleted: function (row) {
-                this.deleteOneRow(this, '');
-            },
-            cancel: function () {
-                this.formVisible = false;
-            },
-            save: function (formName) {
-                if (this.ruleFormData.type === '1') {
-                    this.ruleFormData.pid = 0;
-                }
-                this.commitRuleForm(this, formName, 'resource/save', this.afterSave)
-            },
             afterSave: function (vm) {
                 //新增菜单后,通知左侧菜单栏跟新菜单
                 bus.$emit(vm.$configData.busMenuName, "true");
                 // 获取最新的菜单下拉框
                 vm.getMenuList()
-            },
-            dialogClosed: function () {
-                this.closeDialogRuleForm(this);
             },
             getAllRouters: function () {
                 let tmp = [{path: "", meta: {title: "请选择"}}];

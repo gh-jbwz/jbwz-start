@@ -9,7 +9,7 @@
             <div class="container" style="border:0px">
                 <div class="content-head-box">
                     <el-button v-if="hasPermission('user/save')" type="primary" icon="add" class="head-left"
-                               @click="add">添加
+                               @click="handleButtonAction('add')">添加
                     </el-button>
                     <el-input v-model="search_word" placeholder="姓名" class="search-input">
                     </el-input>
@@ -89,22 +89,25 @@
                     >
                     </el-table-column>
                     <el-table-column
-                        prop="createDate"
+                        prop="createTime"
                         label="创建时间"
                         header-align="center"
                         align="center"
+                        width="150px"
                     >
                     </el-table-column>
                     <el-table-column
                         label="操作"
                         header-align="center"
                         align="center"
-                        width="250px"
+                        width="230px"
                     >
                         <template slot-scope="scope">
-                            <el-button @click="detail(scope.row)" type="text" icon="el-icon-tickets" size="small">查看
+                            <el-button @click="handleButtonAction('detail',scope.row)" type="text"
+                                       icon="el-icon-tickets" size="small">查看
                             </el-button>
-                            <el-button v-if="hasPermission('user/update')" @click="edit(scope.row)" type="text"
+                            <el-button v-if="hasPermission('user/update')"
+                                       @click="handleButtonAction('edit',scope.row)" type="text"
                                        icon="el-icon-edit" size="small">编辑
                             </el-button>
                             <el-button v-if="hasPermission('user/delete')" @click="deleted(scope.row)" type="text"
@@ -124,7 +127,7 @@
 
 
         <!--添加弹出框 -->
-        <el-dialog :title="dialogTitle" @closed="dialogClosed" :visible.sync="formVisible"
+        <el-dialog :title="dialogFormTitle" @closed="dialogClosed" :visible.sync="dialogFormVisible"
                    width="45%">
             <el-form :rules="rules" ref="ruleForm" :model="ruleFormData" size="medium"
                      label-width="100px">
@@ -162,8 +165,8 @@
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
-                <el-button @click="cancel('ruleForm')">取 消</el-button>
-                <el-button type="primary" v-if="!isDetailShow" @click="save('ruleForm')">保 存</el-button>
+                <el-button v-if="!isDetailButton" @click="dialogFormVisible=false">取 消</el-button>
+                <el-button type="primary" v-if="!isDetailButton" @click="save">保 存</el-button>
             </span>
         </el-dialog>
     </div>
@@ -174,10 +177,19 @@
     export default {
         data() {
             return {
-                businessName: '用户',
-                formVisible: false,
-                dialogTitle: '',
-                isDetailShow: false,
+                /* =====  start  =====  以下变量名称在每个vue文件中都必须保持不变 */
+                dialogFormVisible: false,
+                dialogFormTitle: '',
+                isDetailButton: false,
+                isAddButton: false,
+                isEditButton: false,
+                search_word: '',
+                loading: false,
+                tableData: [],
+                total: 0,
+                /* ======  end  ======== */
+                //下面的ruleFormData,rules两个变量的名称也必须保持不变,内容需要跟据业务字段改变
+                businessName: '用户',//功能名称
                 ruleFormData: {
                     userId: '',
                     userNo: '',
@@ -189,11 +201,6 @@
                     birthday: '',
                     entryDate: ''
                 },
-                search_word: '',
-                isAdd: false,
-                loading: false,
-                tableData: [],
-                total: 0,
                 rules: {
                     userNo: [
                         {required: true, message: '请输入员工工号', trigger: 'blur'},
@@ -214,24 +221,25 @@
             this.list()
         },
         methods: {
+            dialogClosed: function () {
+                this.closeDialogRuleForm(this);
+            },
+            //action=add|edit|detail
+            handleButtonAction: function (action, row) {
+                this.$handleButtonAction(this, action, row);
+            },
+            save: function () {
+                let url = 'error';
+                if (this.isAddButton) {
+                    url = 'user/save';
+                } else if (this.isEditButton) {
+                    url = 'user/update';
+                }
+                this.commitRuleForm(this, url)
+            },
             list: function (currentPage) {
                 this.loading = true;
                 this.getPageTable(this, currentPage, 'user/page', {"userName": this.search_word})
-            },
-            add: function () {
-                this.dialogTitle = "添加" + this.businessName;
-                this.formVisible = true;
-            },
-            edit: function (row) {
-                this.dialogTitle = "编辑" + this.businessName;
-                this.setRuleFormData(row);
-                this.formVisible = true;
-            },
-            detail: function (row) {
-                this.isDetailShow = true;
-                this.dialogTitle = this.businessName + "详情";
-                this.setRuleFormData(row);
-                this.formVisible = true;
             },
             setRuleFormData: function (row) {
                 this.ruleFormData.userId = row.userId;
@@ -246,15 +254,6 @@
             },
             deleted: function (row) {
                 this.deleteOneRow(this, '');
-            },
-            cancel: function (formName) {
-                this.formVisible = false;
-            },
-            save: function (formName) {
-                this.commitRuleForm(this, formName, 'user/save')
-            },
-            dialogClosed: function () {
-                this.closeDialogRuleForm(this);
             }
         }
     }

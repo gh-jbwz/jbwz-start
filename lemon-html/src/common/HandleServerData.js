@@ -1,5 +1,7 @@
 export default {
     install(Vue, options) {
+        let ruleFormName = 'ruleForm';
+
         function handlePageNumber(pageNumber) {
             return isNaN(pageNumber) || pageNumber == undefined ? 0 : pageNumber - 1;
         }
@@ -23,12 +25,17 @@ export default {
         }
         Vue.prototype.closeDialogRuleForm = function (vm) {
             this.resetRuleForm(vm);
-            vm.$refs['ruleForm'].clearValidate();
-            if (vm.isDetailShow) {
-                vm.isDetailShow = false;
-            } else {
+            vm.$refs[ruleFormName].clearValidate();
+            if (vm.isDetailButton) {
+                vm.isDetailButton = false;
             }
-            vm.formVisible = false;
+            if (vm.isEditButton) {
+                vm.isEditButton = false;
+            }
+            if (vm.isAddButton) {
+                vm.isAddButton = false;
+            }
+            vm.dialogFormVisible = false;
         }
         Vue.prototype.fillTableData = function (vm, res) {
             let data = vm.parseTableDataResponse(res);
@@ -49,8 +56,8 @@ export default {
                 vm.fillTableData(vm, res);
             })
         }
-        Vue.prototype.commitRuleForm = function (vm, formName, url, callBack) {
-            vm.$refs[formName].validate((valid) => {
+        Vue.prototype.commitRuleForm = function (vm, url, callBack) {
+            vm.$refs[ruleFormName].validate((valid) => {
                 if (valid) {
                     vm.$axios.post(url, vm.ruleFormData)
                         .then(function (res) {
@@ -60,16 +67,36 @@ export default {
                             }
                             vm.list(0);
                         })
-                    vm.formVisible = false;
+                    vm.dialogFormVisible = false;
                 } else {
                     return false;
                 }
             });
         }
-        let permissionObj = ["user/save", "user/update", "resource/save", "resource/update"]
+        /* 权限设置 */
+        let permissionObj = ["user/save", "user/delete", "user/update", "resource/save", "resource/update"]
         Vue.prototype.permissionData = permissionObj;
         Vue.prototype.hasPermission = function (resourceUrl) {
             return this.permissionData.includes(resourceUrl);
+        }
+
+        /* 界面弹框方法 */
+        Vue.prototype.$handleButtonAction = function (vm, action, row) {
+            if (action) {
+                if (action === "detail") {
+                    vm.dialogFormTitle = "查看" + vm.businessName;
+                    vm.isDetailButton = true;
+                    vm.setRuleFormData(row);
+                } else if (action === "edit") {
+                    vm.dialogFormTitle = "编辑" + vm.businessName;
+                    vm.isEditButton = true;
+                    vm.setRuleFormData(row);
+                } else if (action === "add") {
+                    vm.dialogFormTitle = "添加" + vm.businessName;
+                    vm.isAddButton = true;
+                }
+                vm.dialogFormVisible = true;
+            }
         }
     }
 }
