@@ -65,7 +65,9 @@ export default {
                             if (callBack) {
                                 callBack(vm);
                             }
-                            vm.list(0);
+                            if (typeof vm.list === "function") {
+                                vm.list(0);
+                            }
                         })
                     vm.dialogFormVisible = false;
                 } else {

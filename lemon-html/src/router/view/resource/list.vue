@@ -262,9 +262,9 @@
             },
             afterSave: function (vm) {
                 //新增菜单后,通知左侧菜单栏跟新菜单
-                bus.$emit(vm.$configData.busMenuName, "true");
+                bus.$emit(this.$configData.busMenuName, "true");
                 // 获取最新的菜单下拉框
-                vm.getMenuList()
+                this.getMenuList()
             },
             getAllRouters: function () {
                 let tmp = [{path: "", meta: {title: "请选择"}}];

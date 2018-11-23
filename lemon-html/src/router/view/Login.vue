@@ -65,6 +65,7 @@
                             } else {
                                 vm.$cookies.setToken(data.data.userId);
                                 vm.$cookies.setUserName(data.data.userName);
+                                vm.$cookies.setUserImg(data.data.userAvater);
                                 vm.$router.push('/dashboard');
                             }
                         });

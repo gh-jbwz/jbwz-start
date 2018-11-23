@@ -235,6 +235,7 @@
                 } else if (this.isEditButton) {
                     url = 'user/update';
                 }
+                this.$cookies.setUserName(this.ruleFormData.userName);
                 this.commitRuleForm(this, url)
             },
             list: function (currentPage) {
