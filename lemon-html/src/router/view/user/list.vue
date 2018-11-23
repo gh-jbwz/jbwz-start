@@ -8,7 +8,9 @@
             </div>
             <div class="container" style="border:0px">
                 <div class="content-head-box">
-                    <el-button type="primary" icon="add" class="head-left" @click="add">添加</el-button>
+                    <el-button v-if="hasPermission('user/save')" type="primary" icon="add" class="head-left"
+                               @click="add">添加
+                    </el-button>
                     <el-input v-model="search_word" placeholder="姓名" class="search-input">
                     </el-input>
                     <el-button type="primary" icon="el-icon-search" @click="list">搜索</el-button>
@@ -102,9 +104,11 @@
                         <template slot-scope="scope">
                             <el-button @click="detail(scope.row)" type="text" icon="el-icon-tickets" size="small">查看
                             </el-button>
-                            <el-button @click="edit(scope.row)" type="text" icon="el-icon-edit" size="small">编辑
+                            <el-button v-if="hasPermission('user/update')" @click="edit(scope.row)" type="text"
+                                       icon="el-icon-edit" size="small">编辑
                             </el-button>
-                            <el-button @click="deleted(scope.row)" type="text" icon="el-icon-delete" class="red"
+                            <el-button v-if="hasPermission('user/delete')" @click="deleted(scope.row)" type="text"
+                                       icon="el-icon-delete" class="red"
                                        size="small">删除
                             </el-button>
                         </template>

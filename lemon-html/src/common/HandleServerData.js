@@ -66,6 +66,11 @@ export default {
                 }
             });
         }
+        let permissionObj = ["user/save", "user/update", "resource/save", "resource/update"]
+        Vue.prototype.permissionData = permissionObj;
+        Vue.prototype.hasPermission = function (resourceUrl) {
+            return this.permissionData.includes(resourceUrl);
+        }
     }
 }
 

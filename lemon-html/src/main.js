@@ -5,7 +5,7 @@ import axios from './util/Axios';
 import ElementUI from 'element-ui';
 import ConfigData from "./common/ConfigData";
 import Cookies from "./common/Cookies";
-import HandleServerData from "./util/HandleServerData";
+import HandleServerData from "./common/HandleServerData";
 import bus from "./components/common/bus";
 import 'element-ui/lib/theme-chalk/index.css'; // 默认主题
 // import '../static/css/theme-green/index.css';       // 浅绿色主题
